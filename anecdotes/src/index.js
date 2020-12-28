@@ -29,24 +29,25 @@ const Button = ({handleClick, text}) => {
     <button onClick = {handleClick}>{text}</button>
   )
 }
+
 const App = (props) => {
   const [selected, setSelected] = useState(0)
-  const [votes, setVotes] = useState(Array.apply(null, {length: anecdotes.length}).map(function() {return 0;}))
+  const [votes, setVotes] = useState(Array.apply(null, {length: props.anecdotes.length}).map(function() {return 0;}))
   // const [votes, setVotes] = useState(new Uint8Array(6));
   const [mostVotes, setMostVotes] = useState(0)
 
   
 
   const next_anecdote = () => {
-    setSelected(Math.floor(Math.random()*anecdotes.length))
+    setSelected(Math.floor(Math.random()*props.anecdotes.length))
   }
 
   const vote_anecdote = () => {
-    const copy = {...votes }
+    const copy = {...votes } // here votes is a dictionary
     copy[selected] += 1
     setVotes(copy)
-    // console.log(copy)
-    if (copy[selected] > copy[mostVotes]){
+    console.log(copy)
+    if (copy[selected] > copy[mostVotes]){ // important step
       setMostVotes(selected)
     }
   }

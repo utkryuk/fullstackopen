@@ -8,10 +8,11 @@ const App = () => {
   
   const [countries, setCountries] = useState([])
   const [inputCountry, setCountry] = useState("")
+
   // const [showCountry, setShowCountry] = useState()
   // const [filterCountries, setFilterCountries] = useState([])
 
-  const hook = () => {
+  const countryHook = () => {
 
     axios
     .get("https://restcountries.eu/rest/v2/all")
@@ -20,7 +21,8 @@ const App = () => {
     })
   }
 
-  useEffect(hook, [])
+  useEffect(countryHook, [])
+
 
   // const handleFilterCountries = () => {
   //   // countries.filter((country) => {
@@ -34,18 +36,18 @@ const App = () => {
   // }
 
   const handleCountryChange = (event) => {
-    console.log("hi", event)
+    // console.log("hi", event)
     setCountry(event.target.value)
   }
 
   const handleClick = (event, country) => {
     // console.log(event.target.value)
-    // console.log(country)
-    console.log(country.name)
+    // console.log(country.name)
     // setShowCountry(country)
     setCountry(country.name)
   }
 
+  // console.log(process.env.REACT_APP_API_KEY)
   return (
     <div>
       <Filter inputCountry = {inputCountry} handleCountryChange = {handleCountryChange} />

@@ -2,7 +2,7 @@ import React from 'react'
 import Country from './Country'
 
 const Countries = (props) => {
-    
+
     // console.log(props.countries)
     const filteredCountries = props.countries
     .filter((country) => {

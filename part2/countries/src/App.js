@@ -8,6 +8,7 @@ const App = () => {
   
   const [countries, setCountries] = useState([])
   const [inputCountry, setCountry] = useState("")
+  // const [showCountry, setShowCountry] = useState()
   // const [filterCountries, setFilterCountries] = useState([])
 
   const hook = () => {
@@ -33,13 +34,22 @@ const App = () => {
   // }
 
   const handleCountryChange = (event) => {
+    console.log("hi", event)
     setCountry(event.target.value)
+  }
+
+  const handleClick = (event, country) => {
+    // console.log(event.target.value)
+    // console.log(country)
+    console.log(country.name)
+    // setShowCountry(country)
+    setCountry(country.name)
   }
 
   return (
     <div>
       <Filter inputCountry = {inputCountry} handleCountryChange = {handleCountryChange} />
-      <Countries countries = {countries} inputCountry = {inputCountry}/>
+      <Countries countries = {countries} inputCountry = {inputCountry} handleClick = {handleClick} />
     </div>
   )
 }

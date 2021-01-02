@@ -1,7 +1,7 @@
 import React from 'react'
 import Person from './Person'
 
-const Persons = ({persons, filterName}) => {
+const Persons = ({persons, filterName, handleDeleteClick}) => {
     // console.log(persons, filterName)
 
     const filterPersons = persons.filter((person) => {
@@ -12,7 +12,7 @@ const Persons = ({persons, filterName}) => {
         <div>
         <ul>
           {filterPersons.map((person) => {
-            return <Person key={person.name} person = {person}/> // key prop is a feature in React not in html.
+            return <Person key={person.name} person = {person} handleDeleteClick = {(event) => handleDeleteClick(event, person.id)}/> // key prop is a feature in React not in html.
           })}
         </ul>
         </div>

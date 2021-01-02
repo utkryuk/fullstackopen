@@ -19,4 +19,15 @@ const addPerson = (newPerson) => {
     })
 }
 
-export default {getAll, addPerson};
+const deletePerson = (toDeletePerson) => {
+
+    const req = axios.delete(`${baseUrl}/${toDeletePerson.id}`, toDeletePerson)
+    // console.log(req)
+    return req.then((response) => {
+        // console.log(response)
+        // Here response.data will be empty as we have deleted the data.
+        return response.data
+    })
+}
+
+export default {getAll, addPerson, deletePerson};

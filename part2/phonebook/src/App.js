@@ -65,6 +65,27 @@ const App = () => {
     setFilterName(event.target.value)
   }
 
+  const handleDeleteClick = (event, id) => {
+
+    if (window.confirm(`Delete ${event.target.value} ?`)){
+      // const toDeletePerson = persons.filter()
+      // personService.deletePerson(personToBeDeleted)
+      const personToBeDeleted = persons.find(person => person.id === id)
+
+
+      const copyDeleted = {...personToBeDeleted}
+      // console.log(copyDeleted)
+
+      personService
+      .deletePerson(copyDeleted)
+      .then((deletedPersonWhichIsActuallyEmptyNow) => {
+        // console.log(copyDeleted)
+        setPersons(persons.filter(person => person.id !== copyDeleted.id))
+      })
+    }
+
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -74,7 +95,7 @@ const App = () => {
       <PersonForm handleFormSubmit = {handleFormSubmit} newName = {newName} newNumber = {newNumber} handleNumberChange = {handleNumberChange} handleNameChange = {handleNameChange} />
 
       <h2>Numbers</h2>
-      <Persons persons = {persons} filterName = {filterName} />
+      <Persons persons = {persons} filterName = {filterName} handleDeleteClick = {handleDeleteClick}/>
     </div>
   )
 

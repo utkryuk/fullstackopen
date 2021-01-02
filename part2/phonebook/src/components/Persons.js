@@ -5,7 +5,7 @@ const Persons = ({persons, filterName}) => {
     // console.log(persons, filterName)
 
     const filterPersons = persons.filter((person) => {
-        return person.name.toLowerCase().includes(filterName.toLowerCase())
+      return person.name.toLowerCase().includes(filterName.toLowerCase())
     })
 
     return (

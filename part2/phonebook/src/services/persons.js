@@ -19,7 +19,4 @@ const addPerson = (newPerson) => {
     })
 }
 
-
-
-
 export default {getAll, addPerson};

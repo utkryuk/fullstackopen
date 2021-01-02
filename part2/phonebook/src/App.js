@@ -21,13 +21,12 @@ const App = () => {
   useEffect(hook, []);
   
   // Function checks whether the entered name is present in the original list.
-  const checkPhoneBook = () => {
+  const checkPhoneBookIfNameAlreadyExist = () => {
     // console.log(persons.map((value) => value.name))
 
     // var check = persons.map((value) => value.name)
     // debugger;
     if (persons.map(person => person.name).some(name => name === newName)){
-      alert(`${newName} is already added to phonebook`)
       return true
     }
   }
@@ -36,7 +35,7 @@ const App = () => {
     event.preventDefault();
     // console.log(event)
 
-    if (!checkPhoneBook()){
+    if (!checkPhoneBookIfNameAlreadyExist()){
       // var newPersons = persons.concat({ name: newName, number: newNumber})
       // console.log(newx)
       var newPerson = {name: newName, number: newNumber}
@@ -50,6 +49,32 @@ const App = () => {
       setNewName('')
       setNewNumber('')  
     }
+    else{
+      if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+          updateNumberWithSameName()
+      }
+      else{
+        setNewName('')
+        setNewNumber('')
+      }
+    }
+  }
+
+  const updateNumberWithSameName = () => {
+    
+    const contactDetailsToUpdate = persons.find((person) => person.name === newName)
+
+    const copyOfContactDetailsToUpdate = {...contactDetailsToUpdate, number: newNumber}
+
+    personService.updatePerson(copyOfContactDetailsToUpdate)
+    .then((updatedPerson) => {
+      // console.log(updatedPerson)
+      setPersons(persons.map((person) => {
+        return (person.id === contactDetailsToUpdate.id) ? updatedPerson: person
+      }))
+      setNewName('')
+      setNewNumber('')
+    })
   }
 
   const handleNameChange = (event) => {

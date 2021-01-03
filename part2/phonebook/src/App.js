@@ -11,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filterName, setFilterName] = useState('')
   const [addPersonMessage, setAddPersonMessage] = useState(null)
+  const [deleteErrorMessage, setDeleteErrorMessage] = useState(null)
 
 
   const hook = () => {
@@ -116,6 +117,13 @@ const App = () => {
         // console.log(copyDeleted)
         setPersons(persons.filter(person => person.id !== copyDeleted.id))
       })
+      .catch((error) => {
+        setDeleteErrorMessage(`Information of ${personToBeDeleted.name} has already been removed from the server`)
+
+        setTimeout(() => {
+          setDeleteErrorMessage(null)
+        }, 5000)
+      })
     }
 
   }
@@ -123,7 +131,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message = {addPersonMessage} />
+      <Notification addMessage = {addPersonMessage} addPerson = "addPerson" deleteMessage = {deleteErrorMessage} deletePerson = "deletePerson"/>
+
       <Filter filterName = {filterName} filterNameChange = {filterNameChange}/>
 
       <h2>add a new</h2>

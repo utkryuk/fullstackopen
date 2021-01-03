@@ -1,17 +1,24 @@
 import React from 'react'
 
-const Notification = ({message}) => {
+const Notification = ({addMessage, addPerson, deleteMessage, deletePerson}) => {
 
     // console.log(message)
-    if (message === null){
+
+    if (addMessage === null && deleteMessage === null){
         return null
     }
 
-    return (
-        <div className = "addPerson">
-            {message}
-        </div>
-    )
+    if (addMessage !== null){
+        return (
+            <div className = {addPerson}>{addMessage}</div>
+        )
+    }
+
+    if (deleteMessage !== null){
+        return (
+            <div className = {deletePerson}>{deleteMessage}</div>
+        )
+    }
 }
 
 export default Notification;

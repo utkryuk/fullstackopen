@@ -3,12 +3,15 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import personService from './services/persons'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterName, setFilterName] = useState('')
+  const [addPersonMessage, setAddPersonMessage] = useState(null)
+
 
   const hook = () => {
 
@@ -37,7 +40,6 @@ const App = () => {
 
     if (!checkPhoneBookIfNameAlreadyExist()){
       // var newPersons = persons.concat({ name: newName, number: newNumber})
-      // console.log(newx)
       var newPerson = {name: newName, number: newNumber}
 
       personService.addPerson(newPerson)
@@ -45,9 +47,16 @@ const App = () => {
         setPersons(persons.concat(newPerson))
       })
 
-      // setPersons(newPersons)
+      // Notification message
+      setAddPersonMessage(`Added ${newPerson.name}`)
+      setTimeout(() => {
+        // The notification will be there for 5 sec and then will be removed.
+        setAddPersonMessage(null)
+      }, 5000)
+      // console.log(newPerson)
+      
       setNewName('')
-      setNewNumber('')  
+      setNewNumber('')
     }
     else{
       if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
@@ -114,6 +123,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message = {addPersonMessage} />
       <Filter filterName = {filterName} filterNameChange = {filterNameChange}/>
 
       <h2>add a new</h2>

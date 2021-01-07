@@ -1,23 +1,9 @@
-// const express = require('express')
-
-// const app = express()
-
-
-// app.get('/api/persons', (request, response) => {
-//     response.json(persons)
-// })
-
-
-// const PORT = 3001
-// app.listen(PORT, () => {
-//     console.log(`The server is running on ${PORT}`)
-// })
-
-const { response } = require('express')
 const express = require('express')
+const morgan = require('morgan')
 
 const app = express()
 app.use(express.json())
+app.use(morgan('tiny'))
 
 persons = [
     {
@@ -74,7 +60,7 @@ const generateId = () => {
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
-    console.log(body)
+    // console.log(body)
     
     if(body.name && body.number){
         if (persons.some(person => person.name === body.name)){

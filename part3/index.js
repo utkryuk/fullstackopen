@@ -1,9 +1,33 @@
+const { request, response } = require('express')
 const express = require('express')
 const morgan = require('morgan')
 
 const app = express()
 app.use(express.json())
-app.use(morgan('tiny'))
+
+// app.use(morgan('tiny'))
+
+morgan.token('body', (request, response) => {
+    if(request.method === "POST"){
+        return JSON.stringify(request.body)
+    }
+    else
+        return ""
+})
+
+app.use(morgan((tokens, request, response) => {
+    return [
+        tokens.method(request, response),
+        tokens.url(request, response),
+        tokens.status(request, response),
+        tokens.res(request, response, 'content-length'), '-',
+        tokens['response-time'](request, response), 'ms', 
+        tokens.body(request, response)
+    ].join(' ')
+}))
+// app.use(morgan(':method :url :status :res[content-length] - :response-time ms :type'))
+
+
 
 persons = [
     {
@@ -58,6 +82,7 @@ const generateId = () => {
     return Math.ceil((Math.random()*9999 + 1))
 }
 
+
 app.post('/api/persons', (request, response) => {
     const body = request.body
     // console.log(body)
@@ -73,6 +98,7 @@ app.post('/api/persons', (request, response) => {
         }
         
         persons = persons.concat(new_person)
+                
         return response.json(new_person)    
     }
     else{
@@ -80,6 +106,13 @@ app.post('/api/persons', (request, response) => {
     }
     // console.log("sdgsdg")
 })
+
+
+const unknownRoute = (request, response) => {
+    response.status(404).send({error: 'unknown endpoint'})
+}
+
+app.use(unknownRoute)
 
 const PORT = 3001
 

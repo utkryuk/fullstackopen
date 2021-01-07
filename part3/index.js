@@ -76,23 +76,23 @@ app.post('/api/persons', (request, response) => {
     const body = request.body
     console.log(body)
     
-    if(body.name === '' || body.number === ''){
+    if(body.name && body.number){
+        if (persons.some(person => person.name === body.name)){
+            return response.status(400).send({error: 'name must be unique'})
+        }    
+        const new_person = {
+            id: generateId(),
+            name: body.name,
+            number: body.number
+        }
+        
+        persons = persons.concat(new_person)
+        return response.json(new_person)    
+    }
+    else{
         response.status(400).send({error: 'one of the parameter is empty'})
     }
-
-    if (persons.some(person => person.name === body.name)){
-        response.status(400).send({error: 'name must be unique'})
-    }
-
-    const new_person = {
-        id: generateId(),
-        name: body.name,
-        number: body.number
-    }
-
-    persons = persons.concat(new_person)
-    response.json(new_person)
-
+    // console.log("sdgsdg")
 })
 
 const PORT = 3001

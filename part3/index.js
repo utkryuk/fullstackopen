@@ -17,7 +17,7 @@ const { response } = require('express')
 const express = require('express')
 
 const app = express()
-
+app.use(express.json())
 
 persons = [
     {
@@ -67,6 +67,29 @@ app.delete('/api/persons/:id', (request, response) => {
 
 })
 
+
+const generateId = () => {
+    return Math.ceil((Math.random()*9999 + 1))
+}
+
+app.post('/api/persons', (request, response) => {
+    const body = request.body
+    console.log(body)
+    
+    if(body.name === '' || body.number === ''){
+        response.status(400).end()
+    }
+
+    const new_person = {
+        id: generateId(),
+        name: body.name,
+        number: body.number
+    }
+
+    persons = persons.concat(new_person)
+    response.json(new_person)
+
+})
 
 const PORT = 3001
 

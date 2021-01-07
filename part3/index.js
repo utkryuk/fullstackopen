@@ -77,7 +77,11 @@ app.post('/api/persons', (request, response) => {
     console.log(body)
     
     if(body.name === '' || body.number === ''){
-        response.status(400).end()
+        response.status(400).send({error: 'one of the parameter is empty'})
+    }
+
+    if (persons.some(person => person.name === body.name)){
+        response.status(400).send({error: 'name must be unique'})
     }
 
     const new_person = {

@@ -12,7 +12,20 @@ const totalLikes = (array) => {
 
 }
 
+const favouriteBlog = (array) => {
+
+    const maxLikes = Math
+        .max(...array.map(blog => {
+            return blog.likes
+        }))
+    
+    return array.find(blog => {
+        return blog.likes === maxLikes
+    })
+}
+
 module.exports = {
     dummy,
-    totalLikes
+    totalLikes,
+    favouriteBlog
 }

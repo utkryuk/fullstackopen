@@ -112,11 +112,11 @@ test('Checking that unique property is named id', async() => {
 
 describe('deletion of a blog', () => {
 
-    test.only('DELETE api/blogs/id if id is valid', async () => {
+    test('DELETE api/blogs/id if id is valid', async () => {
 
         const blogsAtStart = await helper.blogsInDB()
         const blogToDelete = blogsAtStart[0]
-        
+
         await api
             .delete(`/api/blogs/${blogToDelete.id}`)
             .expect(204)
@@ -129,8 +129,57 @@ describe('deletion of a blog', () => {
 
         expect(allTitles).not.toContain(blogToDelete.title)
     })
+
+    test('DELETE api/blogs/id if id is invalid then 400', async () => {
+
+        const blogsAtStart = await helper.blogsInDB()
+
+        await api
+            .delete('/api/blogs/52213')
+            .expect(400)
+
+        expect(blogsAtStart).toHaveLength(helper.initialBlogs.length)
+        
+    })
 })
 
+
+describe('updation of a blog', () => {
+
+    test('PUT /api/blogs/id if id is valid', async () => {
+
+        const blogsAtStart = await helper.blogsInDB()
+        const blogToUpdate = blogsAtStart[0]
+
+        blogToUpdate.title = 'First title changed'
+        blogToUpdate.url = 'url.com'
+
+        const updatedBlog = await api
+            .put(`/api/blogs/${blogToUpdate.id}`)
+            .send(blogToUpdate)
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
+
+        const blogsAtEnd = await helper.blogsInDB()
+        expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+        
+        const processedBlog = JSON.parse(JSON.stringify(blogToUpdate))
+
+        expect(updatedBlog.body).toEqual(processedBlog)
+    })
+
+    test('PUT /api/blogs/id if id invalid then 400', async () => {
+
+        const blogsAtStart = await helper.blogsInDB()
+
+        await api
+            .put('/api/blogs/343123123')
+            .send(blogsAtStart[0])
+            .expect(400)
+        
+        expect(blogsAtStart).toHaveLength(helper.initialBlogs.length)
+    })
+})
 
 afterAll (() => {
     mongoose.connection.close()

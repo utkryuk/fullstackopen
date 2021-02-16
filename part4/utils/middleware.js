@@ -25,7 +25,7 @@ const unknownEndpoint = (request, response) => {
 
 const errorHandler = (error, request, response, next) => {
 
-    // console.log(error.message)
+    console.log(`Error: ${error.message} ends`)
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
     }
@@ -35,6 +35,10 @@ const errorHandler = (error, request, response, next) => {
     
     else if (error.name === 'JsonWebTokenError') {
         return response.status(401).json({ error: 'invalid token'})
+    }
+
+    else if (error.name === 'TypeError' && error.message === "Cannot read property 'user' of null") {
+        return response.status(500).json({ error: 'blog not present'})
     }
 
     next(error)

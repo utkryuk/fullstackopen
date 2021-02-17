@@ -53,7 +53,6 @@ blogsRouter.delete('/:id', async (request, response, next) => {
 
     try {
 
-
         const decodedToken = await jwt.verify(request.token, process.env.SECRET)
 
         if (!decodedToken.id || !request.token) {
@@ -64,6 +63,9 @@ blogsRouter.delete('/:id', async (request, response, next) => {
 
         if (blog.user.toString() === decodedToken.id.toString()) {
             await blog.remove()
+            // user.blogs = user.blogs.concat(savedBlog._id) // Important
+            // await user.save() // Important
+
             return response.status(204).end()
         }
         else {

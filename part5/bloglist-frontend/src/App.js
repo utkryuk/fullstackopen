@@ -70,7 +70,7 @@ const App = () => {
       {
         user === null
           ? loginForm():
-          <Blogs blogs = {blogs} user = {user}/>
+          <Blogs blogs = {blogs} user = {user} setUser = {setUser}/>
       }
     </div>
   )

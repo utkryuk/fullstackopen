@@ -38,7 +38,7 @@ const BlogForm = ({blogs, setBlogs, setSuccessMessage}) => {
 
     return (
         <div>
-            <Toggelable buttonLabel = 'new blog' ref = {blogFormRef}>
+            <Toggelable buttonLabel = 'create new blog' ref = {blogFormRef}>
                 <h2>create new</h2>
                 <form onSubmit = {handleSubmitBlogForm}>
                     <div>

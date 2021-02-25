@@ -23,9 +23,25 @@ const createBlog = async (newBlog) => {
     return response.data
 
   }
-  catch {
-    alert('error')
+  catch (error){
+    alert(`error: ${error}`)
   }
 }
 
-export default { getAll , setToken, createBlog}
+const updateBlog = async (newBlog, id) => {
+  const config = {
+    headers: {
+      'Authorization': token
+    }
+  }
+
+  try {
+    const response = await axios.put(`${baseUrl}/${id}`, newBlog, config)
+    return response.data
+  }
+  catch (error){
+    alert(`error: ${error}`)
+  }
+}
+
+export default { getAll , setToken, createBlog, updateBlog}

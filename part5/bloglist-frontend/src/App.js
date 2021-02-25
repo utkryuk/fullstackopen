@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Blogs from './components/Blogs'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Notification from './components/Notification'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
 
   useEffect(() => {
@@ -43,7 +46,12 @@ const App = () => {
         setPassword('')
 
       })
-      .catch((error) => alert(`${error}`))
+      .catch(() => {
+        setErrorMessage('wrong username or password')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
   }
 
   const loginForm = () => (
@@ -68,10 +76,11 @@ const App = () => {
   
   return (
     <div>
+      <Notification successMessage = {successMessage} errorMessage = {errorMessage} />
       {
         user === null
           ? loginForm():
-          <Blogs blogs = {blogs} setBlogs = {setBlogs} user = {user} setUser = {setUser}/>
+          <Blogs blogs = {blogs} setBlogs = {setBlogs} user = {user} setUser = {setUser} setSuccessMessage = {setSuccessMessage}/>
       }
     </div>
   )

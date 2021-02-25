@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import blogService from '../services/blogs'
 
-const BlogForm = ({blogs, setBlogs}) => {
+const BlogForm = ({blogs, setBlogs, setSuccessMessage}) => {
 
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
@@ -9,7 +9,6 @@ const BlogForm = ({blogs, setBlogs}) => {
 
     const handleSubmitBlogForm = (event) => {
         event.preventDefault()
-        console.log(event.target)
         const newBlog = {
             title: title,
             author: author,
@@ -20,6 +19,11 @@ const BlogForm = ({blogs, setBlogs}) => {
             .createBlog(newBlog)
             .then(returnedBlog => {
                 setBlogs(blogs.concat(returnedBlog))
+                setSuccessMessage(title)
+                setTimeout(() => {
+                    setSuccessMessage(null)
+                }, 5000)
+                
                 setTitle('')
                 setAuthor('')
                 setUrl('')        

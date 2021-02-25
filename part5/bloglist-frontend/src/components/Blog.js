@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, user}) => {
+const Blog = ({blogs, setBlogs, blog, user}) => {
 
   const blogStyle = {
     paddingTop: 10,
@@ -28,10 +28,9 @@ const Blog = ({ blog, user}) => {
 
   const handleLikeBlog = (event) => {
     event.preventDefault()
-    console.log(blog)
     const newBlog = {
       user: user.id,
-      likes: blog.likes + 1,
+      likes: likes + 1,
       author: blog.author,
       title: blog.title,
       url: blog.url
@@ -44,6 +43,21 @@ const Blog = ({ blog, user}) => {
       })
   }
 
+  const handleRemoveBlog = (event) => {
+    event.preventDefault()
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      blogService
+        .deleteBlog(blog.id)
+        .then(() => {
+            const newBlogs = blogs.filter((blogObj) => {
+              return blogObj.id !== blog.id
+            })
+            setBlogs(newBlogs)
+        })
+    }
+
+  }
+
   return (
     <div style = {blogStyle}>
       <div style = {hideFullBlog}>
@@ -51,9 +65,10 @@ const Blog = ({ blog, user}) => {
       </div>
       <div style = {showFullBlog}>
         {blog.title} {blog.author}<button onClick = {toggleVisibility}>hide</button>
-        <div>{blog.url}</div>
+        <div><a href= {blog.url} target='_blank' rel="noopener noreferrer">{blog.url}</a></div>
         <div>likes {likes}<button onClick = {handleLikeBlog}>like</button></div>
         <div>{user.name}</div>
+        <div><button onClick = {handleRemoveBlog}>remove</button></div>
       </div>
     </div>
   )

@@ -16,7 +16,7 @@ const Blogs = ({blogs, setBlogs, user, setUser, setSuccessMessage}) => {
             <p>{user.name} logged in<button onClick = {handleLogoutButton}>logout</button></p>
             <BlogForm blogs= {blogs} setBlogs = {setBlogs} setSuccessMessage = {setSuccessMessage}/>
             {blogs.map(blog => {
-                return <Blog key={blog.id} user = {user} blog = {blog} />
+                return <Blog key={blog.id} blogs = {blogs} setBlogs = {setBlogs} user = {user} blog = {blog} />
             })}
         </div>
     )

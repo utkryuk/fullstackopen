@@ -10,13 +10,18 @@ const Blogs = ({blogs, setBlogs, user, setUser, setSuccessMessage}) => {
         setUser(null)
     }
 
+    // console.log(blogs)
     return (
         <div>
             <h2>blogs</h2>
             <p>{user.name} logged in<button onClick = {handleLogoutButton}>logout</button></p>
             <BlogForm blogs= {blogs} setBlogs = {setBlogs} setSuccessMessage = {setSuccessMessage}/>
-            {blogs.map(blog => {
-                return <Blog key={blog.id} blogs = {blogs} setBlogs = {setBlogs} user = {user} blog = {blog} />
+            {blogs
+                .sort((a, b) => {
+                    return b.likes - a.likes
+                })
+                .map(blog => {
+                    return <Blog key={blog.id} blogs = {blogs} setBlogs = {setBlogs} user = {user} blog = {blog} />
             })}
         </div>
     )

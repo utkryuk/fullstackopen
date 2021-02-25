@@ -40,6 +40,10 @@ const Blog = ({blogs, setBlogs, blog, user}) => {
       .updateBlog(newBlog, blog.id)
       .then(() => {
         setLikes(likes + 1)
+        const newBlogs = blogs.map((blogObj) => {
+          return blogObj.id === blog.id ? {...blogObj, likes: likes} : blogObj
+        })
+        setBlogs(newBlogs)
       })
   }
 

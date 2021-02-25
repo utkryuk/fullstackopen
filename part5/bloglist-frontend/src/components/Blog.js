@@ -13,6 +13,7 @@ const Blog = ({blogs, setBlogs, blog, user}) => {
   
   const [likes, setLikes] = useState(blog.likes)
   const [visible, setVisible] = useState(false)
+  const [removeButton, ] = useState(user.username === blog.user.username)
 
   const hideFullBlog = {
     display: visible ? 'none' : ''
@@ -62,6 +63,10 @@ const Blog = ({blogs, setBlogs, blog, user}) => {
 
   }
 
+  const showRemoveBlogButton = () => (
+        <div><button onClick = {handleRemoveBlog}>remove</button></div>
+  )
+
   return (
     <div style = {blogStyle}>
       <div style = {hideFullBlog}>
@@ -72,7 +77,8 @@ const Blog = ({blogs, setBlogs, blog, user}) => {
         <div><a href= {blog.url} target='_blank' rel="noopener noreferrer">{blog.url}</a></div>
         <div>likes {likes}<button onClick = {handleLikeBlog}>like</button></div>
         <div>{user.name}</div>
-        <div><button onClick = {handleRemoveBlog}>remove</button></div>
+
+        {removeButton === true && showRemoveBlogButton()}
       </div>
     </div>
   )

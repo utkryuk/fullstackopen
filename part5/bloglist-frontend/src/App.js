@@ -22,6 +22,7 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
+      blogService.setToken(user.token)
     }
   }, [])
 
@@ -70,7 +71,7 @@ const App = () => {
       {
         user === null
           ? loginForm():
-          <Blogs blogs = {blogs} user = {user} setUser = {setUser}/>
+          <Blogs blogs = {blogs} setBlogs = {setBlogs} user = {user} setUser = {setUser}/>
       }
     </div>
   )

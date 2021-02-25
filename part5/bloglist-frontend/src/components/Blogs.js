@@ -2,7 +2,7 @@ import React from 'react'
 import Blog from './Blog'
 import BlogForm from './BlogForm'
 
-const Blogs = ({blogs, setBlogs, user, setUser, setSuccessMessage}) => {
+const Blogs = ({ blogs, setBlogs, user, setUser, setSuccessMessage }) => {
 
     const handleLogoutButton = (event) => {
         event.preventDefault()
@@ -22,7 +22,7 @@ const Blogs = ({blogs, setBlogs, user, setUser, setSuccessMessage}) => {
                 })
                 .map(blog => {
                     return <Blog key={blog.id} blogs = {blogs} setBlogs = {setBlogs} user = {user} blog = {blog} />
-            })}
+                })}
         </div>
     )
 }

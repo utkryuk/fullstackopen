@@ -1,7 +1,6 @@
 import React from 'react'
 
-const Notification = ({successMessage, errorMessage}) => {
-    
+const Notification = ({ successMessage, errorMessage }) => {
     const errorStyle = {
         color: 'red',
         backgroundColor: 'lightgrey'
@@ -22,7 +21,7 @@ const Notification = ({successMessage, errorMessage}) => {
             <div style={errorStyle}>
                 <h2>{errorMessage}</h2>
             </div>
-        )    
+        )
     }
 
     if (successMessage !== null) {

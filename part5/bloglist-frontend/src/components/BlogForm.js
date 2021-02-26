@@ -41,13 +41,13 @@ const BlogForm = ({ blogs, setBlogs, setSuccessMessage }) => {
                 <h2>create new</h2>
                 <form onSubmit = {handleSubmitBlogForm}>
                     <div>
-                        title:<input type='text' value = {title} onChange={({ target }) => setTitle(target.value)} />
+                        title:<input type='text' value = {title} onChange={({ target }) => setTitle(target.value)} required/>
                     </div>
                     <div>
-                    author:<input type='text' value = {author} onChange={({ target }) => setAuthor(target.value)} />
+                    author:<input type='text' value = {author} onChange={({ target }) => setAuthor(target.value)} required/>
                     </div>
                     <div>
-                    url:<input type='text' value = {url} onChange={({ target }) => setUrl(target.value)} />
+                    url:<input type='text' value = {url} onChange={({ target }) => setUrl(target.value)} required/>
                     </div>
                     <div>
                         <button type='submit'>create</button>

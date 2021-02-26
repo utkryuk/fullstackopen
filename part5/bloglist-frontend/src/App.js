@@ -3,6 +3,7 @@ import Blogs from './components/Blogs'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
+import LoginForm from './components/LoginForm'
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
@@ -54,21 +55,7 @@ const App = () => {
     }
 
     const loginForm = () => (
-        <div>
-            <form onSubmit={handleLoginFormSubmit}>
-                <div>
-                  username
-                    <input type = 'text' value = {username} onChange = {({ target }) => (setUserName(target.value))}/>
-                </div>
-                <div>
-                  password
-                    <input type = 'password' value = {password} onChange = {({ target }) => (setPassword(target.value))} />
-                </div>
-                <div>
-                    <button type = 'submit'>login</button>
-                </div>
-            </form>
-        </div>
+        <LoginForm handleLoginFormSubmit = {handleLoginFormSubmit} username = {username} setUserName  = {setUserName} password = {password} setPassword = {setPassword} />
     )
     return (
         <div>

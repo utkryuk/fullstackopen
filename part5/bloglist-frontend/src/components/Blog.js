@@ -66,11 +66,11 @@ const Blog = ({ blogs, setBlogs, blog, user }) => {
     )
 
     return (
-        <div style = {blogStyle}>
-            <div style = {hideFullBlog}>
+        <div style = {blogStyle} className = 'blogDiv'>
+            <div style = {hideFullBlog} className = 'hideFullBlogDiv'>
                 {blog.title} {blog.author}<button onClick = {toggleVisibility}>view</button>
             </div>
-            <div style = {showFullBlog}>
+            <div style = {showFullBlog} className = 'showFullBlogDiv'>
                 {blog.title} {blog.author}<button onClick = {toggleVisibility}>hide</button>
                 <div><a href= {blog.url} target='_blank' rel="noopener noreferrer">{blog.url}</a></div>
                 <div>likes {likes}<button onClick = {handleLikeBlog}>like</button></div>

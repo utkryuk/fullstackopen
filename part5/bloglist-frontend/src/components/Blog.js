@@ -62,19 +62,19 @@ const Blog = ({ blogs, setBlogs, blog, user }) => {
     }
 
     const showRemoveBlogButton = () => (
-        <div><button onClick = {handleRemoveBlog}>remove</button></div>
+        <div><button className = 'removeBlog-btn' onClick = {handleRemoveBlog}>remove</button></div>
     )
 
     return (
         <div style = {blogStyle} className = 'blogDiv'>
             <div style = {hideFullBlog} className = 'hideFullBlogDiv'>
-                {blog.title} {blog.author}<button onClick = {toggleVisibility}>view</button>
+                {blog.title} {blog.author}<button className = 'view-btn' onClick = {toggleVisibility}>view</button>
             </div>
             <div style = {showFullBlog} className = 'showFullBlogDiv'>
-                {blog.title} {blog.author}<button onClick = {toggleVisibility}>hide</button>
-                <div><a href= {blog.url} target='_blank' rel="noopener noreferrer">{blog.url}</a></div>
-                <div>likes {likes}<button onClick = {handleLikeBlog}>like</button></div>
-                <div>{user.name}</div>
+                {blog.title} {blog.author}<button className = 'hide-btn' onClick = {toggleVisibility}>hide</button>
+                <div className = 'url'><a href= {blog.url} target='_blank' rel="noopener noreferrer">{blog.url}</a></div>
+                <div className = 'likes'>likes {likes}<button className = 'addLikes-btn' onClick = {handleLikeBlog}>like</button></div>
+                <div className = 'user'>{user.name}</div>
 
                 {removeButton === true && showRemoveBlogButton()}
             </div>

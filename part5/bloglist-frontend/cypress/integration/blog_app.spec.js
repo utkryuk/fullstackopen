@@ -49,20 +49,19 @@ describe('Blog app', () => {
         })
 
         it('A blog can be created', function() {
-            
-            cy.contains('create new blog').click()
-            
-            const newBlog = {
-                title: 'Testing My blog',
-                author: 'Tester',
-                url: 'www.google.com'
-            }
+        
+        const newBlog = {
+            title: 'A new blog added',
+            author: 'Tester',
+            url: 'www.google.com'
+        }    
+        cy.contains('create new blog').click()
 
-            cy.get('.blog-title').type(newBlog.title)
-            cy.get('.blog-author').type(newBlog.author)
-            cy.get('.blog-url').type(newBlog.url)
+        cy.get('.blog-title').type(newBlog.title)
+        cy.get('.blog-author').type(newBlog.author)
+        cy.get('.blog-url').type(newBlog.url)
 
-            cy.get('.blog-submit').click()
+        cy.get('.blog-submit').click()
 
             cy.get('.success-class')
                 .should('contain', newBlog.title)
@@ -78,6 +77,19 @@ describe('Blog app', () => {
 
             cy.get('.view-btn').contains('view')
 
+        })
+
+        it.only('a blog can be liked', function() {
+
+            cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com'})
+            
+            cy.get('.view-btn').click()
+            cy.get('.hide-btn').contains('hide')
+
+            cy.get('.addLikes-btn').click()
+            cy.get('.addLikes-btn').click()
+            cy.get('.addLikes-btn').click()
+            cy.get('.likes').contains(3)
         })
 
     })

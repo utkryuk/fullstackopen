@@ -79,7 +79,7 @@ describe('Blog app', () => {
 
         })
 
-        it.only('a blog can be liked', function() {
+        it('a blog can be liked', function() {
 
             cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com'})
             
@@ -90,6 +90,34 @@ describe('Blog app', () => {
             cy.get('.addLikes-btn').click()
             cy.get('.addLikes-btn').click()
             cy.get('.likes').contains(3)
+        })
+
+
+        it('a blog can be deleted by authorized user', function() {
+
+            cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com'})
+            cy.get('.view-btn').click()
+            cy.get('.hide-btn').contains('hide')
+
+            cy.get('.removeBlog-btn').click()
+
+            cy.get('html').should('not.contain', 'Testing My blog')
+        })
+
+        it('a blog cannot be deleted by unauthorized user', function() {
+
+            cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com'})
+
+            cy.get('.logout-btn').click()
+
+            cy.addUser({name: 'Yash', username: 'yash', password: 'newpassword'})
+
+            cy.login({username: 'yash', password: 'newpassword'})
+
+            cy.get('.view-btn').click()
+            cy.get('.hide-btn').contains('hide')
+
+            cy.get('html').should('not.contain', 'remove')
         })
 
     })

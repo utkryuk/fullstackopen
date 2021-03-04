@@ -45,6 +45,16 @@ Cypress.Commands.add('addBlog', ({title, author, url}) => {
             'Authorization': `bearer ${JSON.parse(localStorage.getItem('loggedBlogAppUser')).token}`
         }
     })
+    .then(() => {
+        cy.visit('http://localhost:3000')
+    })
+})
 
-    cy.visit('http://localhost:3000')
+Cypress.Commands.add('addUser', ({username, name, password}) => {
+
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:3001/api/users',
+        body: {username, name, password},
+    })
 })

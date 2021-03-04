@@ -14,7 +14,7 @@ const Blogs = ({ blogs, setBlogs, user, setUser, setSuccessMessage }) => {
     return (
         <div>
             <h2>blogs</h2>
-            <p>{user.name} logged in<button onClick = {handleLogoutButton}>logout</button></p>
+            <p>{user.name} logged in<button onClick = {handleLogoutButton} className = 'logout-btn'>logout</button></p>
             <BlogForm blogs= {blogs} setBlogs = {setBlogs} setSuccessMessage = {setSuccessMessage}/>
             {blogs
                 .sort((a, b) => {

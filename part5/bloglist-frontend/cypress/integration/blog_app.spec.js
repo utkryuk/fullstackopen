@@ -37,6 +37,48 @@ describe('Blog app', () => {
                 .should('contain', 'wrong username or password')
                 .and('have.css', 'color', 'rgb(255, 0, 0)')
                 .and('have.css', 'background-color', 'rgb(211, 211, 211)')
+
+            cy.get('html').should('not.contain', 'Utkarsh logged in')
         })
+    })
+
+    describe.only('When logged in', function() {
+
+        beforeEach(function() {
+            cy.login({username: 'utkarsh', password: 'sekret'})
+        })
+
+        it('A blog can be created', function() {
+            
+            cy.contains('create new blog').click()
+            
+            const newBlog = {
+                title: 'Testing My blog',
+                author: 'Tester',
+                url: 'www.google.com'
+            }
+
+            cy.get('.blog-title').type(newBlog.title)
+            cy.get('.blog-author').type(newBlog.author)
+            cy.get('.blog-url').type(newBlog.url)
+
+            cy.get('.blog-submit').click()
+
+            cy.get('.success-class')
+                .should('contain', newBlog.title)
+                .should('have.css', 'color', 'rgb(0, 128, 0)')
+                .should('have.css', 'background-color', 'rgb(211, 211, 211)')
+
+            cy.get('.blogDiv')
+                .should('have.css', 'padding-top', '10px')
+                .should('have.css', 'padding-left', '2px')
+                .should('have.css', 'border-style', 'solid')
+                .should('have.css', 'border-width', '1px')
+                .should('have.css', 'margin-bottom', '5px')
+
+            cy.get('.view-btn').contains('view')
+
+        })
+
     })
 })

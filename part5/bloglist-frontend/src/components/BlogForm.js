@@ -41,16 +41,16 @@ const BlogForm = ({ blogs, setBlogs, setSuccessMessage }) => {
                 <h2>create new</h2>
                 <form onSubmit = {handleSubmitBlogForm}>
                     <div>
-                        title:<input type='text' value = {title} onChange={({ target }) => setTitle(target.value)} required/>
+                        title:<input type='text' class= 'blog-title' value = {title} onChange={({ target }) => setTitle(target.value)} required/>
                     </div>
                     <div>
-                    author:<input type='text' value = {author} onChange={({ target }) => setAuthor(target.value)} required/>
+                    author:<input type='text' class = 'blog-author' value = {author} onChange={({ target }) => setAuthor(target.value)} required/>
                     </div>
                     <div>
-                    url:<input type='text' value = {url} onChange={({ target }) => setUrl(target.value)} required/>
+                    url:<input type='text' class = 'blog-url' value = {url} onChange={({ target }) => setUrl(target.value)} required/>
                     </div>
                     <div>
-                        <button type='submit'>create</button>
+                        <button type='submit' class = 'blog-submit'>create</button>
                     </div>
                 </form>
             </Toggelable>

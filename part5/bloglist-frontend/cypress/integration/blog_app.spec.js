@@ -12,11 +12,31 @@ describe('Blog app', () => {
     })
 
     it('login form is shown', function() {
-        cy.get('#username').type('utkarsh')
-        cy.get('#password').type('sekret')
+        cy.get('#username')
+        cy.get('#password')
 
-        cy.get('#login-button').click()
+        cy.get('#login-button')
+    })
 
-        cy.contains('Utkarsh logged in')
+    describe('login', function (){
+        it('succeeds with correct credentials', function() {
+            cy.get('#username').type('utkarsh')
+            cy.get('#password').type('sekret')
+
+            cy.get('#login-button').click()
+            cy.contains('Utkarsh logged in')
+        })
+
+        it('fails with wrong credentials', function() {
+            cy.get('#username').type('fdsfsd')
+            cy.get('#password').type('23412')
+
+            cy.get('#login-button').click()
+            // cy.contains('wrong username or password')
+            cy.get('.error-class')
+                .should('contain', 'wrong username or password')
+                .and('have.css', 'color', 'rgb(255, 0, 0)')
+                .and('have.css', 'background-color', 'rgb(211, 211, 211)')
+        })
     })
 })

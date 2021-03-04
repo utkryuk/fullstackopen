@@ -18,7 +18,7 @@ const Notification = ({ successMessage, errorMessage }) => {
 
     if (errorMessage !== null) {
         return (
-            <div style={errorStyle}>
+            <div style={errorStyle} className = 'error-class'>
                 <h2>{errorMessage}</h2>
             </div>
         )
@@ -26,7 +26,7 @@ const Notification = ({ successMessage, errorMessage }) => {
 
     if (successMessage !== null) {
         return (
-            <div style = {successStyle}>
+            <div style = {successStyle} className = 'success-class'>
                 <h2>a new blog {successMessage} added</h2>
             </div>
         )

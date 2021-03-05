@@ -32,7 +32,7 @@ describe('Blog app', () => {
             cy.get('#password').type('23412')
 
             cy.get('#login-button').click()
-            // cy.contains('wrong username or password')
+
             cy.get('.error-class')
                 .should('contain', 'wrong username or password')
                 .and('have.css', 'color', 'rgb(255, 0, 0)')
@@ -81,7 +81,7 @@ describe('Blog app', () => {
 
         it('a blog can be liked', function() {
 
-            cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com'})
+            cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com', likes: 0})
             
             cy.get('.view-btn').click()
             cy.get('.hide-btn').contains('hide')
@@ -89,13 +89,13 @@ describe('Blog app', () => {
             cy.get('.addLikes-btn').click()
             cy.get('.addLikes-btn').click()
             cy.get('.addLikes-btn').click()
-            cy.get('.likes').contains(3)
+            cy.get('.likes-number').contains(3)
         })
 
 
         it('a blog can be deleted by authorized user', function() {
 
-            cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com'})
+            cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com', likes: 0})
             cy.get('.view-btn').click()
             cy.get('.hide-btn').contains('hide')
 
@@ -106,7 +106,7 @@ describe('Blog app', () => {
 
         it('a blog cannot be deleted by unauthorized user', function() {
 
-            cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com'})
+            cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com', likes: 0})
 
             cy.get('.logout-btn').click()
 
@@ -118,6 +118,28 @@ describe('Blog app', () => {
             cy.get('.hide-btn').contains('hide')
 
             cy.get('html').should('not.contain', 'remove')
+        })
+
+        it('all blogs are sorted in descending order on the basis of likes', function() {
+
+            cy.addBlog({title: 'Testing my blog1', author: 'tester1', url: 'www.google.com', likes: 50})
+            cy.addBlog({title: 'Testing my blog2', author: 'tester2', url: 'www.google.com', likes: 101})
+            cy.addBlog({title: 'Testing my blog3', author: 'tester3', url: 'www.google.com', likes: 60})
+
+            cy.get('.blogDiv')
+                .then(() => {
+                    cy.get('.view-btn').click({multiple: true})
+                    
+                    cy.get('.likes-number').then((likes) => {
+
+                        const likeArray = []
+                        likes.map((_, like) => {
+                            likeArray.push(Number(like.innerHTML))
+                        })
+
+                        expect(likeArray).to.deep.equal([101, 60, 50])
+                    })
+                })
         })
 
     })

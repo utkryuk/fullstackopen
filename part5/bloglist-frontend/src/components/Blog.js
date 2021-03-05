@@ -41,7 +41,7 @@ const Blog = ({ blogs, setBlogs, blog, user }) => {
             .then(() => {
                 setLikes(likes + 1)
                 const newBlogs = blogs.map((blogObj) => {
-                    return blogObj.id === blog.id ? { ...blogObj, likes: likes } : blogObj
+                    return blogObj.id === blog.id ? { ...blogObj, likes: newBlog.likes } : blogObj
                 })
                 setBlogs(newBlogs)
             })
@@ -71,10 +71,20 @@ const Blog = ({ blogs, setBlogs, blog, user }) => {
                 {blog.title} {blog.author}<button className = 'view-btn' onClick = {toggleVisibility}>view</button>
             </div>
             <div style = {showFullBlog} className = 'showFullBlogDiv'>
-                {blog.title} {blog.author}<button className = 'hide-btn' onClick = {toggleVisibility}>hide</button>
-                <div className = 'url'><a href= {blog.url} target='_blank' rel="noopener noreferrer">{blog.url}</a></div>
-                <div className = 'likes'>likes {likes}<button className = 'addLikes-btn' onClick = {handleLikeBlog}>like</button></div>
-                <div className = 'user'>{user.name}</div>
+                {blog.title} {blog.author}
+                <button className = 'hide-btn' onClick = {toggleVisibility}>hide</button>
+                
+                <div className = 'url'>
+                    <a href= {blog.url} target='_blank' rel="noopener noreferrer">{blog.url}</a>
+                </div>
+                <div className = 'likes'>
+                    likes 
+                    <span className = 'likes-number'> {likes}</span>
+                    <button className = 'addLikes-btn' onClick = {handleLikeBlog}>like</button>
+                </div>
+                <div className = 'user'>
+                    {user.name}
+                </div>
 
                 {removeButton === true && showRemoveBlogButton()}
             </div>

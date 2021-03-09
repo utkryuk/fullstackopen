@@ -8,7 +8,6 @@ const Filter = () => {
 
     const handleChange = (event) => {
         event.preventDefault()
-        console.log(event.target.value)
         dispatch(filterAnecdote(event.target.value))    
     }
 

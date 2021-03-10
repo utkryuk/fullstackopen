@@ -1,3 +1,5 @@
+let timerID = null
+
 export const setNotification = (notification, time) => {
     return async (dispatch) => {
         dispatch({
@@ -5,7 +7,8 @@ export const setNotification = (notification, time) => {
             data: notification
         })
 
-        setTimeout(() => {
+        clearTimeout(timerID)
+        timerID = setTimeout(() => {
             dispatch({
                 type: 'REMOVE_NOTIFICATION'
             })

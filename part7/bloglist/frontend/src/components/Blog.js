@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
+import { useSelector } from 'react-redux'
 
-const Blog = ({ blogs, setBlogs, blog, user }) => {
+const Blog = ({ blog }) => {
+
+    const user = useSelector(state => state.login)
 
     const blogStyle = {
         paddingTop: 10,
@@ -26,44 +29,44 @@ const Blog = ({ blogs, setBlogs, blog, user }) => {
         setVisible(!visible)
     }
 
-    const handleLikeBlog = (event) => {
-        event.preventDefault()
-        const newBlog = {
-            user: user.id,
-            likes: likes + 1,
-            author: blog.author,
-            title: blog.title,
-            url: blog.url
-        }
+    // const handleLikeBlog = (event) => {
+    //     event.preventDefault()
+    //     const newBlog = {
+    //         user: user.id,
+    //         likes: likes + 1,
+    //         author: blog.author,
+    //         title: blog.title,
+    //         url: blog.url
+    //     }
 
-        blogService
-            .updateBlog(newBlog, blog.id)
-            .then(() => {
-                setLikes(likes + 1)
-                const newBlogs = blogs.map((blogObj) => {
-                    return blogObj.id === blog.id ? { ...blogObj, likes: newBlog.likes } : blogObj
-                })
-                setBlogs(newBlogs)
-            })
-    }
+    //     blogService
+    //         .updateBlog(newBlog, blog.id)
+    //         .then(() => {
+    //             setLikes(likes + 1)
+    //             const newBlogs = blogs.map((blogObj) => {
+    //                 return blogObj.id === blog.id ? { ...blogObj, likes: newBlog.likes } : blogObj
+    //             })
+    //             setBlogs(newBlogs)
+    //         })
+    // }
 
-    const handleRemoveBlog = (event) => {
-        event.preventDefault()
-        if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-            blogService
-                .deleteBlog(blog.id)
-                .then(() => {
-                    const newBlogs = blogs.filter((blogObj) => {
-                        return blogObj.id !== blog.id
-                    })
-                    setBlogs(newBlogs)
-                })
-        }
-    }
+    // const handleRemoveBlog = (event) => {
+    //     event.preventDefault()
+    //     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+    //         blogService
+    //             .deleteBlog(blog.id)
+    //             .then(() => {
+    //                 const newBlogs = blogs.filter((blogObj) => {
+    //                     return blogObj.id !== blog.id
+    //                 })
+    //                 setBlogs(newBlogs)
+    //             })
+    //     }
+    // }
 
-    const showRemoveBlogButton = () => (
-        <div><button className = 'removeBlog-btn' onClick = {handleRemoveBlog}>remove</button></div>
-    )
+    // const showRemoveBlogButton = () => (
+    //     <div><button className = 'removeBlog-btn' onClick = {handleRemoveBlog}>remove</button></div>
+    // )
 
     return (
         <div style = {blogStyle} className = 'blogDiv'>
@@ -80,13 +83,13 @@ const Blog = ({ blogs, setBlogs, blog, user }) => {
                 <div className = 'likes'>
                     likes 
                     <span className = 'likes-number'> {likes}</span>
-                    <button className = 'addLikes-btn' onClick = {handleLikeBlog}>like</button>
+                    {/* <button className = 'addLikes-btn' onClick = {handleLikeBlog}>like</button> */}
                 </div>
                 <div className = 'user'>
                     {user.name}
                 </div>
 
-                {removeButton === true && showRemoveBlogButton()}
+                {/* {removeButton === true && showRemoveBlogButton()} */}
             </div>
         </div>
     )

@@ -1,65 +1,47 @@
 import React, { useState, useEffect } from 'react'
 import Blogs from './components/Blogs'
-import blogService from './services/blogs'
-import loginService from './services/login'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import { setNotification } from './reducers/notificationReducer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { initialBlogs } from './reducers/blogsReducer'
+import { login, initialLogin } from './reducers/loginReducer'
 
 const App = () => {
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
-    const [user, setUser] = useState(null)
+    const user = useSelector(state => state.login)
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(initialLogin())
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(initialBlogs())
     }, [dispatch])
 
-    useEffect(() => {
-        const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
-        if (loggedUserJSON) {
-            const user = JSON.parse(loggedUserJSON)
-            setUser(user)
-            blogService.setToken(user.token)
-        }
-    }, [])
-
     const handleLoginFormSubmit = (event) => {
         event.preventDefault()
 
-        const userData = {
-            username: username,
-            password: password
-        }
-
-        loginService
-            .login(userData)
-            .then(userData => {
-                setUser(userData)
-                window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(userData))
-                setUserName('')
-                setPassword('')
-
-            })
-            .catch(() => {
-                dispatch(setNotification(`wrong username or password`, 5, false))
-            })
+        dispatch(login(username, password)) // error handling left showing notification
     }
 
     const loginForm = () => (
         <LoginForm handleLoginFormSubmit = {handleLoginFormSubmit} username = {username} setUserName  = {setUserName} password = {password} setPassword = {setPassword} />
     )
+
+    console.log(useSelector(state => state.login))
+    console.log(window.localStorage)
+
     return (
         <div>
             <Notification />
             {
                 user === null
                     ? loginForm():
-                    <Blogs user = {user} setUser = { setUser} />
+                    <Blogs />
             }
         </div>
     )

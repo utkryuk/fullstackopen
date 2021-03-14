@@ -19,21 +19,9 @@ const BlogForm = () => {
 
         blogFormRef.current.toggleVisibility()
 
-        dispatch(addBlog(title, author, url))
+        dispatch(addBlog(title, author, url)) // error handling in addBlog left
         
         dispatch(setNotification(title, 5, true))
-        // blogService
-        //     .createBlog(newBlog)
-        //     .then(returnedBlog => {
-        //         setBlogs(blogs.concat(returnedBlog))
-
-        //         dispatch(setNotification(title, 5, true))
-
-        //         setTitle('')
-        //         setAuthor('')
-        //         setUrl('')
-        //     })
-        //     .catch(error => alert(`${error}`))
     }
 
     return (

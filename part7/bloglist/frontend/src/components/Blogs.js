@@ -2,7 +2,7 @@ import React from 'react'
 import Blog from './Blog'
 import BlogForm from './BlogForm'
 
-const Blogs = ({ blogs, setBlogs, user, setUser, setSuccessMessage }) => {
+const Blogs = ({ blogs, setBlogs, user, setUser }) => {
 
     const handleLogoutButton = (event) => {
         event.preventDefault()
@@ -15,7 +15,7 @@ const Blogs = ({ blogs, setBlogs, user, setUser, setSuccessMessage }) => {
         <div>
             <h2>blogs</h2>
             <p>{user.name} logged in<button onClick = {handleLogoutButton} className = 'logout-btn'>logout</button></p>
-            <BlogForm blogs= {blogs} setBlogs = {setBlogs} setSuccessMessage = {setSuccessMessage}/>
+            <BlogForm blogs= {blogs} setBlogs = {setBlogs}/>
             {blogs
                 .sort((a, b) => {
                     return b.likes - a.likes

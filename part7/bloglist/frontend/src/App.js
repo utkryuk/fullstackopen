@@ -4,15 +4,16 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
+import { setNotification } from './reducers/notificationReducer'
+import { useDispatch } from 'react-redux'
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
-    const [errorMessage, setErrorMessage] = useState(null)
-    const [successMessage, setSuccessMessage] = useState(null)
 
+    const dispatch = useDispatch()
 
     useEffect(() => {
         blogService.getAll().then(blogs =>
@@ -47,10 +48,7 @@ const App = () => {
 
             })
             .catch(() => {
-                setErrorMessage('wrong username or password')
-                setTimeout(() => {
-                    setErrorMessage(null)
-                }, 5000)
+                dispatch(setNotification(`wrong username or password`, 5, false))
             })
     }
 
@@ -59,11 +57,11 @@ const App = () => {
     )
     return (
         <div>
-            <Notification successMessage = {successMessage} errorMessage = {errorMessage} />
+            <Notification />
             {
                 user === null
                     ? loginForm():
-                    <Blogs blogs = {blogs} setBlogs = {setBlogs} user = {user} setUser = {setUser} setSuccessMessage = {setSuccessMessage}/>
+                    <Blogs blogs = {blogs} setBlogs = {setBlogs} user = {user} setUser = { setUser} />
             }
         </div>
     )

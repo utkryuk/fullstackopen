@@ -1,6 +1,8 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
-const Notification = ({ successMessage, errorMessage }) => {
+const Notification = () => {
+    
     const errorStyle = {
         color: 'red',
         backgroundColor: 'lightgrey'
@@ -8,29 +10,33 @@ const Notification = ({ successMessage, errorMessage }) => {
 
     const successStyle = {
         color: 'green',
-        backgroundColor: 'lightgrey'
-
+        backgroundColor: 'lightgtrey'
     }
 
-    if (successMessage === null && errorMessage === null) {
+    const notification = useSelector(state => state.notification)
+
+    if (notification === null) {
         return null
     }
-
-    if (errorMessage !== null) {
-        return (
-            <div style={errorStyle} className = 'error-class'>
-                <h2>{errorMessage}</h2>
-            </div>
-        )
+    else {
+        console.log(notification)
+        const notifMessage = notification.notification
+        if (notification.success) {
+            return (
+                <div style = {successStyle} className = 'success-class'>
+                    <h2>{notifMessage}</h2>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div style = {errorStyle} className = 'error-class'>
+                    <h2>{notifMessage}</h2>
+                </div>
+            )
+        }
     }
 
-    if (successMessage !== null) {
-        return (
-            <div style = {successStyle} className = 'success-class'>
-                <h2>a new blog {successMessage} added</h2>
-            </div>
-        )
-    }
 }
 
 export default Notification

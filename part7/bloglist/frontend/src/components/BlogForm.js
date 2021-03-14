@@ -1,12 +1,16 @@
 import React, { useState, useRef } from 'react'
 import blogService from '../services/blogs'
 import Toggelable from './Toggelable'
+import { setNotification } from '../reducers/notificationReducer'
+import { useDispatch } from 'react-redux'
 
-const BlogForm = ({ blogs, setBlogs, setSuccessMessage }) => {
+const BlogForm = ({ blogs, setBlogs }) => {
 
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
+
+    const dispatch = useDispatch()
 
     const blogFormRef = useRef()
 
@@ -24,10 +28,9 @@ const BlogForm = ({ blogs, setBlogs, setSuccessMessage }) => {
             .createBlog(newBlog)
             .then(returnedBlog => {
                 setBlogs(blogs.concat(returnedBlog))
-                setSuccessMessage(title)
-                setTimeout(() => {
-                    setSuccessMessage(null)
-                }, 5000)
+                
+                dispatch(setNotification(title, 5, true))
+
                 setTitle('')
                 setAuthor('')
                 setUrl('')

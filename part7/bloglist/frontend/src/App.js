@@ -32,9 +32,6 @@ const App = () => {
         <LoginForm handleLoginFormSubmit = {handleLoginFormSubmit} username = {username} setUserName  = {setUserName} password = {password} setPassword = {setPassword} />
     )
 
-    console.log(useSelector(state => state.login))
-    console.log(window.localStorage)
-
     return (
         <div>
             <Notification />

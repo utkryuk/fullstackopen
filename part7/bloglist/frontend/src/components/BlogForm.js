@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react'
-import blogService from '../services/blogs'
 import Toggelable from './Toggelable'
 import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
+import { addBlog } from '../reducers/blogsReducer'
 
-const BlogForm = ({ blogs, setBlogs }) => {
+const BlogForm = () => {
 
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
@@ -16,26 +16,24 @@ const BlogForm = ({ blogs, setBlogs }) => {
 
     const handleSubmitBlogForm = (event) => {
         event.preventDefault()
-        const newBlog = {
-            title: title,
-            author: author,
-            url: url
-        }
 
         blogFormRef.current.toggleVisibility()
 
-        blogService
-            .createBlog(newBlog)
-            .then(returnedBlog => {
-                setBlogs(blogs.concat(returnedBlog))
-                
-                dispatch(setNotification(title, 5, true))
+        dispatch(addBlog(title, author, url))
+        
+        dispatch(setNotification(title, 5, true))
+        // blogService
+        //     .createBlog(newBlog)
+        //     .then(returnedBlog => {
+        //         setBlogs(blogs.concat(returnedBlog))
 
-                setTitle('')
-                setAuthor('')
-                setUrl('')
-            })
-            .catch(error => alert(`${error}`))
+        //         dispatch(setNotification(title, 5, true))
+
+        //         setTitle('')
+        //         setAuthor('')
+        //         setUrl('')
+        //     })
+        //     .catch(error => alert(`${error}`))
     }
 
     return (

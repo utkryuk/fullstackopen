@@ -6,9 +6,9 @@ import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import { setNotification } from './reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
+import { initialBlogs } from './reducers/blogsReducer'
 
 const App = () => {
-    const [blogs, setBlogs] = useState([])
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
@@ -16,10 +16,8 @@ const App = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        blogService.getAll().then(blogs =>
-            setBlogs( blogs )
-        )
-    }, [])
+        dispatch(initialBlogs())
+    }, [dispatch])
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
@@ -61,7 +59,7 @@ const App = () => {
             {
                 user === null
                     ? loginForm():
-                    <Blogs blogs = {blogs} setBlogs = {setBlogs} user = {user} setUser = { setUser} />
+                    <Blogs user = {user} setUser = { setUser} />
             }
         </div>
     )

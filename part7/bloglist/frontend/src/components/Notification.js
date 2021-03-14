@@ -19,7 +19,6 @@ const Notification = () => {
         return null
     }
     else {
-        console.log(notification)
         const notifMessage = notification.notification
         if (notification.success) {
             return (

@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import Blogs from './components/Blogs'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
+import Users from './components/Users'
 import { setNotification } from './reducers/notificationReducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { initialBlogs } from './reducers/blogsReducer'
 import { login, initialLogin } from './reducers/loginReducer'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
+
 
 const App = () => {
     const [username, setUserName] = useState('')
@@ -16,10 +18,6 @@ const App = () => {
 
     useEffect(() => {
         dispatch(initialLogin())
-    }, [dispatch])
-
-    useEffect(() => {
-        dispatch(initialBlogs())
     }, [dispatch])
 
     const handleLoginFormSubmit = (event) => {
@@ -34,12 +32,27 @@ const App = () => {
 
     return (
         <div>
-            <Notification />
-            {
+            <Router>
+                <nav>
+                    <Link to = '/'>blogs</Link>
+                    <Link to = '/users'>users</Link>
+                </nav>
+                <Notification />
+
+                <Switch>
+                    <Route exact path = '/'>
+                        { user === null ? loginForm() : <Blogs />}      
+                    </Route>
+                    <Route path = '/users'>
+                        <Users />
+                    </Route>
+                </Switch>
+            </Router>
+            {/* {
                 user === null
                     ? loginForm():
                     <Blogs />
-            }
+            } */}
         </div>
     )
 }

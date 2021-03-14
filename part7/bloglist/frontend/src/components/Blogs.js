@@ -1,33 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Blog from './Blog'
 import BlogForm from './BlogForm'
-import { logout } from '../reducers/loginReducer'
 import { useDispatch, useSelector } from 'react-redux'
+import { initialBlogs } from '../reducers/blogsReducer'
+import LoginMessage from './LoginMessage'
 
 const Blogs = () => {
 
-    const user = useSelector(state => state.login)
+    const dispatch = useDispatch()
     
+    useEffect(() => {
+        dispatch(initialBlogs())
+    }, [dispatch])
+
     const blogs = useSelector(state => state.blogs)
         .sort((a, b) => {
             return b.likes - a.likes
         })
     
-    const dispatch = useDispatch()
-
-    const handleLogOutButton = (event) => {
-        event.preventDefault()
-        dispatch(logout())
-    }
     
     return (
         <div>
             <h2>Blogs</h2>
-            <p>{user.name} loggen in<button onClick = {handleLogOutButton} className = 'logout-btn'>logout</button></p>
+            <LoginMessage />
             <BlogForm />
             {blogs.map(blog => {
-                return <Blog key = {blog.id} blogs = {blogs} blog = {blog} />
-                // return <Blog key = {blog.id} blogs = {blogs} user = {user} blog = {blog} />
+                return <Blog key = {blog.id} blog = {blog} />
             })}
         </div>
     )

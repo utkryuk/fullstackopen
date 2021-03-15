@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { likeBlog, deleteBlog } from '../reducers/blogsReducer'
-import LoginMessage from './LoginMessage'
 import { useHistory } from 'react-router-dom'
 
 const Blog = ({ blog }) => {
@@ -36,26 +35,20 @@ const Blog = ({ blog }) => {
 
     return (
         <div>
-            <div>
-                <h2>blogs</h2>
-                <LoginMessage />
+            <h2>{blog.title} by {blog.author}</h2>
+            <div className = 'url'>
+                <a href = {blog.url} target = '_blank' rel = 'noopener noreferrer'>{blog.url}</a>
             </div>
-            <div>
-                <h2>{blog.title} by {blog.author}</h2>
-                <div className = 'url'>
-                    <a href = {blog.url} target = '_blank' rel = 'noopener noreferrer'>{blog.url}</a>
-                </div>
-                <div className = 'likes'>
-                    likes
-                    <span className = 'likes-number'> {blog.likes}</span>
-                    <button className = 'addLikes-btn' onClick = {handleLikeBlog}>like</button>
-                </div>
-                <div className = 'user'>
-                    added by {user.name}
-                </div>
-                {removeButton && showRemoveBlogButton()}
-            </div>            
-        </div>
+            <div className = 'likes'>
+                likes
+                <span className = 'likes-number'> {blog.likes}</span>
+                <button className = 'addLikes-btn' onClick = {handleLikeBlog}>like</button>
+            </div>
+            <div className = 'user'>
+                added by {user.name}
+            </div>
+            {removeButton && showRemoveBlogButton()}
+        </div>            
     )
 }
 

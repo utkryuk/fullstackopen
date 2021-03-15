@@ -1,5 +1,6 @@
 import loginService from '../services/login'
 import blogService from '../services/blogs'
+import { setNotification } from './notificationReducer'
 
 export const initialLogin = () => {
     return async dispatch => {
@@ -19,12 +20,17 @@ export const initialLogin = () => {
 export const login = (username, password) => {
     return async dispatch => {
 
-        const userData = await loginService.login({ username, password })
-        window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(userData))
-        dispatch({
-            type: 'LOGIN',
-            data: userData
-        })
+        try {
+            const userData = await loginService.login({ username, password })
+            window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(userData))
+            dispatch({
+                type: 'LOGIN',
+                data: userData
+            })
+        }
+        catch (error) {
+            dispatch(setNotification('wrong username or password', 5, false))
+        }
     }
 }
 

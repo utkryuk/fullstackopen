@@ -9,6 +9,7 @@ import { setNotification } from './reducers/notificationReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { login, initialLogin } from './reducers/loginReducer'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, useRouteMatch } from 'react-router-dom'
+import LoginMessage from './components/LoginMessage'
 
 
 const App = () => {
@@ -44,11 +45,21 @@ const App = () => {
         ? blogs.find(blog => blog.id === matchedBlogUrl.params.id)
         : null
     
+    const padding = {
+        padding: 5
+    }
+
+    const bgColor = {
+        backgroundColor: 'lightgrey',
+        padding: 5
+    }
+
     return (
         <div>
-            <nav>
-                <Link to = '/'>blogs</Link>
-                <Link to = '/users'>users</Link>
+            <nav style = { bgColor }>
+                <Link style = { padding } to = '/'>blogs</Link>
+                <Link style = { padding } to = '/users'>users</Link>
+                <LoginMessage />
             </nav>
             <Notification />
 

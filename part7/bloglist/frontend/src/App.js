@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Blogs from './components/Blogs'
+import Blog from './components/Blog'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Users from './components/Users'
@@ -15,6 +16,7 @@ const App = () => {
     const [password, setPassword] = useState('')
     const user = useSelector(state => state.login)
     const users = useSelector(state => state.users)
+    const blogs = useSelector(state => state.blogs)
 
     const dispatch = useDispatch()
 
@@ -36,6 +38,12 @@ const App = () => {
     const matchedUser = matchedUserUrl
         ? users.find(user => user.id === matchedUserUrl.params.id)
         : null
+
+    const matchedBlogUrl = useRouteMatch('/blogs/:id')
+    const matchedBlog = matchedBlogUrl
+        ? blogs.find(blog => blog.id === matchedBlogUrl.params.id)
+        : null
+    
     return (
         <div>
             <nav>
@@ -47,6 +55,9 @@ const App = () => {
             <Switch>
                 <Route exact path = '/'>
                     { user === null ? loginForm() : <Blogs />}      
+                </Route>
+                <Route path = '/blogs/:id'>
+                    <Blog blog = {matchedBlog} />
                 </Route>
                 <Route exact path = '/users'>
                     <Users />

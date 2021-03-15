@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import Blog from './Blog'
 import BlogForm from './BlogForm'
 import { useDispatch, useSelector } from 'react-redux'
 import { initialBlogs } from '../reducers/blogsReducer'
 import LoginMessage from './LoginMessage'
+import { Link } from 'react-router-dom'
 
 const Blogs = () => {
 
@@ -17,6 +17,14 @@ const Blogs = () => {
         .sort((a, b) => {
             return b.likes - a.likes
         })
+
+    const blogStyle = {
+        paddingTop: 10,
+        paddingLeft: 2,
+        border: 'solid',
+        borderWidth: 1,
+        marginBottom: 5
+    }
     
     
     return (
@@ -25,8 +33,11 @@ const Blogs = () => {
             <LoginMessage />
             <BlogForm />
             {blogs.map(blog => {
-                return <Blog key = {blog.id} blog = {blog} />
-            })}
+                return <div key = {blog.id} style = {blogStyle}>
+                    <Link to = {`/blogs/${blog.id}`}>{blog.title} by {blog.author}</Link>
+                    </div>
+            })
+            }
         </div>
     )
 }

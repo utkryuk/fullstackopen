@@ -20,8 +20,11 @@ const BlogForm = () => {
         blogFormRef.current.toggleVisibility()
 
         dispatch(addBlog(title, author, url)) // error handling in addBlog left
-        
+    
         dispatch(setNotification(title, 5, true))
+        setTitle('')
+        setAuthor('')
+        setUrl('')
     }
 
     return (

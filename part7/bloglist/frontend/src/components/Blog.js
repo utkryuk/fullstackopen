@@ -1,33 +1,20 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { likeBlog, deleteBlog } from '../reducers/blogsReducer'
+import LoginMessage from './LoginMessage'
+import { useHistory } from 'react-router-dom'
 
 const Blog = ({ blog }) => {
 
     const user = useSelector(state => state.login)
     const dispatch = useDispatch()
+    const history = useHistory()
+    // console.log(blog, user)
+    const isRemove = (blog !== undefined && user !== null && blog!== null && user.username === blog.username)
+    const [removeButton, ] = useState(isRemove)
 
-    const blogStyle = {
-        paddingTop: 10,
-        paddingLeft: 2,
-        border: 'solid',
-        borderWidth: 1,
-        marginBottom: 5
-    }
-
-    const [visible, setVisible] = useState(false)
-    const [removeButton, ] = useState(user.username === blog.user.username)
-
-    const hideFullBlog = {
-        display: visible ? 'none' : ''
-    }
-
-    const showFullBlog = {
-        display: visible ? '' : 'none'
-    }
-
-    const toggleVisibility = () => {
-        setVisible(!visible)
+    if (!blog || !user) {
+        return null
     }
 
     const handleLikeBlog = (event) => {
@@ -39,6 +26,7 @@ const Blog = ({ blog }) => {
         event.preventDefault()
         if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
             dispatch(deleteBlog(blog.id))
+            history.push('/')
         }
     }
 
@@ -47,28 +35,26 @@ const Blog = ({ blog }) => {
     )
 
     return (
-        <div style = {blogStyle} className = 'blogDiv'>
-            <div style = {hideFullBlog} className = 'hideFullBlogDiv'>
-                {blog.title} {blog.author}<button className = 'view-btn' onClick = {toggleVisibility}>view</button>
+        <div>
+            <div>
+                <h2>blogs</h2>
+                <LoginMessage />
             </div>
-            <div style = {showFullBlog} className = 'showFullBlogDiv'>
-                {blog.title} {blog.author}
-                <button className = 'hide-btn' onClick = {toggleVisibility}>hide</button>
-                
+            <div>
+                <h2>{blog.title} by {blog.author}</h2>
                 <div className = 'url'>
-                    <a href= {blog.url} target='_blank' rel="noopener noreferrer">{blog.url}</a>
+                    <a href = {blog.url} target = '_blank' rel = 'noopener noreferrer'>{blog.url}</a>
                 </div>
                 <div className = 'likes'>
-                    likes 
+                    likes
                     <span className = 'likes-number'> {blog.likes}</span>
                     <button className = 'addLikes-btn' onClick = {handleLikeBlog}>like</button>
                 </div>
                 <div className = 'user'>
-                    {user.name}
+                    added by {user.name}
                 </div>
-
-                {removeButton === true && showRemoveBlogButton()}
-            </div>
+                {removeButton && showRemoveBlogButton()}
+            </div>            
         </div>
     )
 }

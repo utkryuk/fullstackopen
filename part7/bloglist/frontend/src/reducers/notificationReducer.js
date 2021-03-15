@@ -19,7 +19,6 @@ export const setNotification = (notification, time, isSuccess) => {
 const notificationReducer = (state = [], action) => {
     switch(action.type) {
         case 'SHOW_NOTIFICATION':
-            console.log('hi')
             return action.data
         case 'REMOVE_NOTIFICATION':
             return null

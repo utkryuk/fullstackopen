@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { likeBlog, deleteBlog } from '../reducers/blogsReducer'
+import { likeBlog, deleteBlog, addBlogComment } from '../reducers/blogsReducer'
 import { useHistory } from 'react-router-dom'
 
 const Blog = ({ blog }) => {
@@ -11,6 +11,7 @@ const Blog = ({ blog }) => {
     // console.log(blog, user)
     const isRemove = (blog !== undefined && user !== null && blog!== null && user.username === blog.username)
     const [removeButton, ] = useState(isRemove)
+    const [comment, setComment] = useState('')
 
     if (!blog || !user) {
         return null
@@ -33,6 +34,12 @@ const Blog = ({ blog }) => {
         <div><button className = 'removeBlog-btn' onClick = {handleRemoveBlog}>remove</button></div>
     )
 
+    const addComment = (event) => {
+        event.preventDefault()
+        dispatch(addBlogComment(blog.id, comment))
+        setComment('')
+    }
+
     return (
         <div>
             <div>
@@ -52,11 +59,19 @@ const Blog = ({ blog }) => {
             </div>
             <div>
                 <h3>comments</h3>
-                <ul>
-                    {blog.comments.map(comment => {
-                        return <li key = {Math.random()*100000}>{comment}</li>
-                    })}
-                </ul>
+                <div>
+                    <form onSubmit = {addComment}>
+                        <input value = {comment} onChange = {({target}) => setComment(target.value)} placeholder = 'add comment...'/>
+                        <button type = 'submit'>add comment</button>
+                    </form>
+                </div>
+                <div>
+                    <ul>
+                        {blog.comments.map(comment => {
+                            return <li key = {Math.random()*100000}>{comment}</li>
+                        })}
+                    </ul>
+                </div>
             </div>
         </div>
     )

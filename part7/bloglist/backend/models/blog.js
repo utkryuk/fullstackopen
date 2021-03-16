@@ -18,7 +18,8 @@ const blogSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true
-    }
+    },
+    comments: Array
 })
 
 blogSchema.set('toJSON', {

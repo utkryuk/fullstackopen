@@ -35,20 +35,30 @@ const Blog = ({ blog }) => {
 
     return (
         <div>
-            <h2>{blog.title} by {blog.author}</h2>
-            <div className = 'url'>
-                <a href = {blog.url} target = '_blank' rel = 'noopener noreferrer'>{blog.url}</a>
+            <div>
+                <h2>{blog.title} by {blog.author}</h2>
+                <div className = 'url'>
+                    <a href = {blog.url} target = '_blank' rel = 'noopener noreferrer'>{blog.url}</a>
+                </div>
+                <div className = 'likes'>
+                    likes
+                    <span className = 'likes-number'> {blog.likes}</span>
+                    <button className = 'addLikes-btn' onClick = {handleLikeBlog}>like</button>
+                </div>
+                <div className = 'user'>
+                    added by {user.name}
+                </div>
+                {removeButton && showRemoveBlogButton()}
             </div>
-            <div className = 'likes'>
-                likes
-                <span className = 'likes-number'> {blog.likes}</span>
-                <button className = 'addLikes-btn' onClick = {handleLikeBlog}>like</button>
+            <div>
+                <h3>comments</h3>
+                <ul>
+                    {blog.comments.map(comment => {
+                        return <li key = {Math.random()*100000}>{comment}</li>
+                    })}
+                </ul>
             </div>
-            <div className = 'user'>
-                added by {user.name}
-            </div>
-            {removeButton && showRemoveBlogButton()}
-        </div>            
+        </div>
     )
 }
 

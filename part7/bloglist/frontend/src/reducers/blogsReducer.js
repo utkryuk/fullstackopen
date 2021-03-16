@@ -1,4 +1,5 @@
 import blogService from '../services/blogs'
+import { setNotification } from './notificationReducer'
 
 export const initialBlogs = () => {
     return async dispatch => {
@@ -18,6 +19,8 @@ export const addBlog = (title, author, url) => {
             type: 'ADD_BLOG',
             data: newBlog
         })
+
+        dispatch(setNotification(`${title} by ${author} added`, 5, true))
     }
 }
 

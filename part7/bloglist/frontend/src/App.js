@@ -5,12 +5,11 @@ import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Users from './components/Users'
 import User from './components/User'
-import { setNotification } from './reducers/notificationReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { login, initialLogin } from './reducers/loginReducer'
-import { BrowserRouter as Router, Switch, Route, Link, Redirect, useRouteMatch } from 'react-router-dom'
+import { Switch, Route, Link, useRouteMatch } from 'react-router-dom'
 import LoginMessage from './components/LoginMessage'
-
+import { Container, AppBar, Toolbar, Button } from '@material-ui/core'
 
 const App = () => {
     const [username, setUserName] = useState('')
@@ -18,7 +17,7 @@ const App = () => {
     const user = useSelector(state => state.login)
     const users = useSelector(state => state.users)
     const blogs = useSelector(state => state.blogs)
-
+    
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -28,7 +27,7 @@ const App = () => {
     const handleLoginFormSubmit = (event) => {
         event.preventDefault()
 
-        dispatch(login(username, password)) // error handling left showing notification
+        dispatch(login(username, password))
     }
 
     const loginForm = () => (
@@ -45,39 +44,37 @@ const App = () => {
         ? blogs.find(blog => blog.id === matchedBlogUrl.params.id)
         : null
     
-    const padding = {
-        padding: 5
-    }
-
-    const bgColor = {
-        backgroundColor: 'lightgrey',
-        padding: 5
-    }
 
     return (
-        <div>
-            <nav style = { bgColor }>
-                <Link style = { padding } to = '/'>blogs</Link>
-                <Link style = { padding } to = '/users'>users</Link>
-                <LoginMessage />
-            </nav>
-            <Notification />
+        <Container>
+            <AppBar position = 'static'>
+                <Toolbar>
+                    <Button color = 'inherit' component = {Link} to ='/'>
+                        Blogs
+                    </Button>
+                    <Button color = 'inherit' component = {Link} to = '/users'>
+                        Users
+                    </Button>
+                    <LoginMessage />
+                </Toolbar>
+            </AppBar>
+                <Notification />
 
-            <Switch>
-                <Route exact path = '/'>
-                    { user === null ? loginForm() : <Blogs />}      
-                </Route>
-                <Route path = '/blogs/:id'>
-                    <Blog blog = {matchedBlog} />
-                </Route>
-                <Route exact path = '/users'>
-                    <Users />
-                </Route>
-                <Route path = '/users/:id'>
-                    <User user = {matchedUser}/>
-                </Route>
-            </Switch>
-        </div>
+                <Switch>
+                    <Route exact path = '/'>
+                        { user === null ? loginForm() : <Blogs />}      
+                    </Route>
+                    <Route path = '/blogs/:id'>
+                        <Blog blog = {matchedBlog} />
+                    </Route>
+                    <Route exact path = '/users'>
+                        <Users />
+                    </Route>
+                    <Route path = '/users/:id'>
+                        <User user = {matchedUser}/>
+                    </Route>
+                </Switch>
+        </Container>
     )
 }
 

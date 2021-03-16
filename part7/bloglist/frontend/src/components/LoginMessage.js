@@ -2,6 +2,8 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../reducers/loginReducer'
 import { useHistory } from 'react-router-dom'
+import { Button } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 
 const LoginMessage = () => {
 
@@ -16,13 +18,16 @@ const LoginMessage = () => {
         history.push('/')
     }
 
-    if (!user) {
-        return null
-    }
-    
     return (
         <span>
-            {user.name} logged in<button onClick = {handleLogOutButton} className = 'logout-btn'>logout</button>
+            {
+                user !== null ?
+                <div>
+                    <Button color ='inherit' onClick = {handleLogOutButton}>Logout</Button>
+                    <em>{user.name} logged in</em>
+                </div>
+                : <Button color = 'inherit' component = {Link} to = '/'>Login</Button>
+            }
         </span>
     )
 }

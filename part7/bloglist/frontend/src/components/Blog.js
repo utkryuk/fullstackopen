@@ -2,6 +2,30 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { likeBlog, deleteBlog, addBlogComment } from '../reducers/blogsReducer'
 import { useHistory } from 'react-router-dom'
+import { makeStyles, List, ListItem, ListItemText, Button, TextField, Link } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        maxWidth: 360,
+        backgroundColor: theme.palette.background.paper,
+    },
+    formRoot: {
+        '& > *': {
+        margin: theme.spacing(1),
+        width: '25ch',
+        },
+    },
+    contentRoot: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        '& > *': {
+            margin: theme.spacing(1),
+            width: theme.spacing(16),
+            height: theme.spacing(16),
+        }
+    }
+}));
 
 const Blog = ({ blog }) => {
 
@@ -12,6 +36,7 @@ const Blog = ({ blog }) => {
     const isRemove = (blog !== undefined && user !== null && blog!== null && user.username === blog.username)
     const [removeButton, ] = useState(isRemove)
     const [comment, setComment] = useState('')
+    const classes = useStyles()
 
     if (!blog || !user) {
         return null
@@ -31,7 +56,7 @@ const Blog = ({ blog }) => {
     }
 
     const showRemoveBlogButton = () => (
-        <div><button className = 'removeBlog-btn' onClick = {handleRemoveBlog}>remove</button></div>
+        <Button variant = 'contained' color = 'secondary' className = 'removeBlog-btn' onClick = {handleRemoveBlog}>remove</Button>
     )
 
     const addComment = (event) => {
@@ -45,32 +70,43 @@ const Blog = ({ blog }) => {
             <div>
                 <h2>{blog.title} by {blog.author}</h2>
                 <div className = 'url'>
-                    <a href = {blog.url} target = '_blank' rel = 'noopener noreferrer'>{blog.url}</a>
+                    <Link href = {blog.url} target = '_blank' rel = 'noopener noreferrer'>{blog.url}</Link>
                 </div>
                 <div className = 'likes'>
-                    likes
-                    <span className = 'likes-number'> {blog.likes}</span>
-                    <button className = 'addLikes-btn' onClick = {handleLikeBlog}>like</button>
+                    LIKES
+                    <span className = 'likes-number'>{` ${blog.likes} `}</span>
+                    <Button variant = 'contained' color = 'primary' onClick = {handleLikeBlog}>like</Button>
                 </div>
                 <div className = 'user'>
-                    added by {user.name}
+                    Added by {`${user.name} `}
+                    {removeButton && showRemoveBlogButton()}
                 </div>
-                {removeButton && showRemoveBlogButton()}
             </div>
             <div>
-                <h3>comments</h3>
+                <h3>COMMENTS</h3>
                 <div>
-                    <form onSubmit = {addComment}>
-                        <input value = {comment} onChange = {({target}) => setComment(target.value)} placeholder = 'add comment...'/>
-                        <button type = 'submit'>add comment</button>
+                    <form className = {classes.formRoot} noValidate onSubmit={addComment}>
+                    <div>
+                        <TextField id = 'outlined-basic' value = {comment} label = 'Comment' onChange = {({ target }) => (setComment(target.value))} placeholder = 'add comment...' required />
+                    </div>
+                    <Button type = 'submit' variant = 'contained' color = 'primary'>Add comment</Button>
                     </form>
                 </div>
                 <div>
-                    <ul>
+                <List component="nav" className={classes.root} aria-label={`comments ${blog.title}`}>
+                    {blog.comments.map(comment => {
+                        return <ListItem button key = {Math.random()*100000}>
+                            <ListItemText primary = {comment} />
+                        </ListItem>
+                    })
+                    }
+                </List>
+
+                    {/* <ul>
                         {blog.comments.map(comment => {
                             return <li key = {Math.random()*100000}>{comment}</li>
                         })}
-                    </ul>
+                    </ul> */}
                 </div>
             </div>
         </div>

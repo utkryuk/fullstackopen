@@ -1,8 +1,17 @@
 import React, { useState, useRef } from 'react'
 import Toggelable from './Toggelable'
-import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import { addBlog } from '../reducers/blogsReducer'
+import { Button, makeStyles, TextField } from '@material-ui/core'
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 const BlogForm = () => {
 
@@ -11,6 +20,7 @@ const BlogForm = () => {
     const [url, setUrl] = useState('')
 
     const dispatch = useDispatch()
+    const classes = useStyles()
 
     const blogFormRef = useRef()
 
@@ -19,9 +29,8 @@ const BlogForm = () => {
 
         blogFormRef.current.toggleVisibility()
 
-        dispatch(addBlog(title, author, url)) // error handling in addBlog left
+        dispatch(addBlog(title, author, url))
     
-        dispatch(setNotification(title, 5, true))
         setTitle('')
         setAuthor('')
         setUrl('')
@@ -30,19 +39,20 @@ const BlogForm = () => {
     return (
         <div>
             <Toggelable buttonLabel = 'create new blog' ref = {blogFormRef}>
-                <h2>create new</h2>
-                <form onSubmit = {handleSubmitBlogForm}>
+                <h2>CREATE BLOG</h2>
+                <form className = {classes.root} onSubmit = {handleSubmitBlogForm}>
+
                     <div>
-                        title:<input type='text' className = 'blog-title' value = {title} onChange={({ target }) => setTitle(target.value)} required/>
+                        <TextField id = 'outlined-basic' value = {title} label = 'Title' onChange = {({ target }) => (setTitle(target.value))} required />
                     </div>
                     <div>
-                    author:<input type='text' className = 'blog-author' value = {author} onChange={({ target }) => setAuthor(target.value)} required/>
+                        <TextField id = 'outlined-basic' value = {author} label = 'Author' onChange = {({ target }) => (setAuthor(target.value))} required/>
                     </div>
                     <div>
-                    url:<input type='text' className = 'blog-url' value = {url} onChange={({ target }) => setUrl(target.value)} required/>
+                        <TextField id = 'outlined-basic' value = {url} label = 'Url' onChange = {({ target }) => (setUrl(target.value))} required />
                     </div>
                     <div>
-                        <button type='submit' className = 'blog-submit'>create</button>
+                        <Button type = 'submit' className = 'blog-submit' variant = 'contained' color = 'primary'>CREATE</Button>
                     </div>
                 </form>
             </Toggelable>

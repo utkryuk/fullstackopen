@@ -13,14 +13,18 @@ export const initialBlogs = () => {
 
 export const addBlog = (title, author, url) => {
     return async dispatch => {
-
-        const newBlog = await blogService.createBlog({ title, author, url})
-        dispatch({
-            type: 'ADD_BLOG',
-            data: newBlog
-        })
-
-        dispatch(setNotification(`${title} by ${author} added`, 5, true))
+        try {
+            const newBlog = await blogService.createBlog({ title, author, url})
+            dispatch({
+                type: 'ADD_BLOG',
+                data: newBlog
+            })
+    
+            dispatch(setNotification(`${title} by ${author} added`, 5, true))    
+        }
+        catch (error) {
+            alert(error)
+        }
     }
 }
 

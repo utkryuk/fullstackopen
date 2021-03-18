@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { Alert } from '@material-ui/lab'
 
 const Notification = () => {
     
@@ -25,6 +26,9 @@ const Notification = () => {
                 <div style = {successStyle} className = 'success-class'>
                     <h2>{notifMessage}</h2>
                 </div>
+                // <div>
+                //     <Alert severity = 'success' component = >{notifMessage}</Alert>
+                // </div>
             )
         }
         else {
@@ -32,6 +36,7 @@ const Notification = () => {
                 <div style = {errorStyle} className = 'error-class'>
                     <h2>{notifMessage}</h2>
                 </div>
+                // <Alert severity = 'error'>{notifMessage}</Alert>
             )
         }
     }

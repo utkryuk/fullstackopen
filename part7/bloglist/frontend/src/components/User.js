@@ -1,7 +1,18 @@
 import React from 'react'
+import { makeStyles, List, ListItem, ListItemText } from '@material-ui/core';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+    
 const User = ({ user }) => {
     
+    const classes = useStyles()
+
     if (!user) {
         return null
     }
@@ -9,12 +20,16 @@ const User = ({ user }) => {
     return (
         <div>
             <h1>{user.name}</h1>                
-            <h3>added blogs</h3>
-            <ul>
+            <h3>Added Blogs</h3>
+
+            <List component="nav" className={classes.root} aria-label={`blogs of ${user.name}`}>
                 {user.blogs.map(blog => {
-                    return <li key = {blog.id}>{blog.title}</li>
-                })}
-            </ul>
+                    return <ListItem button key = {blog.id}>
+                        <ListItemText primary = {blog.title} />
+                    </ListItem>
+                })
+                }
+            </List>
         </div>
     )
 }

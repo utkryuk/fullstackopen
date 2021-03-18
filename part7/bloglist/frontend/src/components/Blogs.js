@@ -43,7 +43,11 @@ const Blogs = () => {
         .sort((a, b) => {
             return b.likes - a.likes
         })
-        
+    
+    const blogLink = {
+        color: 'lightcyan'
+    }
+
     return (
         <div>
             <h2>Blogs</h2>
@@ -61,7 +65,7 @@ const Blogs = () => {
                         {blogs.map(blog => {
                             return <StyledTableRow key = {blog.id}>
                                 <StyledTableCell>
-                                    <Link to = {`/blogs/${blog.id}`}>{blog.title}</Link>
+                                    <Link style = {blogLink} to = {`/blogs/${blog.id}`}>{blog.title}</Link>
                                 </StyledTableCell>
                                 <StyledTableCell align = 'right'>
                                     {blog.author}

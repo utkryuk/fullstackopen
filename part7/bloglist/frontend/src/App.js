@@ -7,6 +7,7 @@ import Users from './components/Users'
 import User from './components/User'
 import { useDispatch, useSelector } from 'react-redux'
 import { login, initialLogin } from './reducers/loginReducer'
+import { initialBlogs } from './reducers/blogsReducer'
 import { Switch, Route, Link, useRouteMatch } from 'react-router-dom'
 import LoginMessage from './components/LoginMessage'
 import { Container, AppBar, Toolbar, Button } from '@material-ui/core'
@@ -24,6 +25,10 @@ const App = () => {
         dispatch(initialLogin())
     }, [dispatch])
 
+    useEffect(() => {
+        dispatch(initialBlogs())
+    }, [dispatch])
+    
     const handleLoginFormSubmit = (event) => {
         event.preventDefault()
 

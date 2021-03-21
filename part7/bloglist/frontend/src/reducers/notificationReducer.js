@@ -20,7 +20,7 @@ export const setNotification = (notification, time, isSuccess) => {
     }
 }
 
-const notificationReducer = (state = [], action) => {
+const notificationReducer = (state = null, action) => {
     switch(action.type) {
         case 'SHOW_NOTIFICATION':
             return action.data

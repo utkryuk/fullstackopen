@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import BlogForm from './BlogForm'
-import { useDispatch, useSelector } from 'react-redux'
-import { initialBlogs } from '../reducers/blogsReducer'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, withStyles, makeStyles, Paper } from '@material-ui/core'
 
@@ -30,24 +29,14 @@ const StyledTableCell = withStyles((theme) => ({
 }))(TableCell)
 
 const Blogs = () => {
-
-    const dispatch = useDispatch()
     
     const classes = useStyles()
-    
-    useEffect(() => {
-        dispatch(initialBlogs())
-    }, [dispatch])
 
     const blogs = useSelector(state => state.blogs)
         .sort((a, b) => {
             return b.likes - a.likes
         })
     
-    const blogLink = {
-        color: 'lightcyan'
-    }
-
     return (
         <div>
             <h2>Blogs</h2>
@@ -65,7 +54,7 @@ const Blogs = () => {
                         {blogs.map(blog => {
                             return <StyledTableRow key = {blog.id}>
                                 <StyledTableCell>
-                                    <Link style = {blogLink} to = {`/blogs/${blog.id}`}>{blog.title}</Link>
+                                    <Link to = {`/blogs/${blog.id}`}>{blog.title}</Link>
                                 </StyledTableCell>
                                 <StyledTableCell align = 'right'>
                                     {blog.author}

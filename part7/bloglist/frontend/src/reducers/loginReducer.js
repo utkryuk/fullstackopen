@@ -23,6 +23,8 @@ export const login = (username, password) => {
         try {
             const userData = await loginService.login({ username, password })
             window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(userData))
+
+            blogService.setToken(userData.token)
             dispatch({
                 type: 'LOGIN',
                 data: userData

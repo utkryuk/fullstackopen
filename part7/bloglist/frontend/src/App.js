@@ -18,7 +18,7 @@ const App = () => {
     const user = useSelector(state => state.login)
     const users = useSelector(state => state.users)
     const blogs = useSelector(state => state.blogs)
-    
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -28,7 +28,7 @@ const App = () => {
     useEffect(() => {
         dispatch(initialBlogs())
     }, [dispatch])
-    
+
     const handleLoginFormSubmit = (event) => {
         event.preventDefault()
 
@@ -48,7 +48,7 @@ const App = () => {
     const matchedBlog = matchedBlogUrl
         ? blogs.find(blog => blog.id === matchedBlogUrl.params.id)
         : null
-    
+
 
     return (
         <Container>
@@ -63,22 +63,22 @@ const App = () => {
                     <LoginMessage />
                 </Toolbar>
             </AppBar>
-                <Notification />
+            <Notification />
 
-                <Switch>
-                    <Route exact path = '/'>
-                        { user === null ? loginForm() : <Blogs />}      
-                    </Route>
-                    <Route path = '/blogs/:id'>
-                        <Blog blog = {matchedBlog} />
-                    </Route>
-                    <Route exact path = '/users'>
-                        <Users />
-                    </Route>
-                    <Route path = '/users/:id'>
-                        <User user = {matchedUser}/>
-                    </Route>
-                </Switch>
+            <Switch>
+                <Route exact path = '/'>
+                    { user === null ? loginForm() : <Blogs />}
+                </Route>
+                <Route path = '/blogs/:id'>
+                    <Blog blog = {matchedBlog} />
+                </Route>
+                <Route exact path = '/users'>
+                    <Users />
+                </Route>
+                <Route path = '/users/:id'>
+                    <User user = {matchedUser}/>
+                </Route>
+            </Switch>
         </Container>
     )
 }

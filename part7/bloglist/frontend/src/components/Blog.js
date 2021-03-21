@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { likeBlog, deleteBlog, addBlogComment } from '../reducers/blogsReducer'
 import { useHistory } from 'react-router-dom'
-import { makeStyles, List, ListItem, ListItemText, Button, TextField, Link } from '@material-ui/core';
+import { makeStyles, List, ListItem, ListItemText, Button, TextField, Link } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
     },
     formRoot: {
         '& > *': {
-        margin: theme.spacing(1),
-        width: '25ch',
+            margin: theme.spacing(1),
+            width: '25ch',
         },
     },
     contentRoot: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
             height: theme.spacing(16),
         }
     }
-}));
+}))
 
 const Blog = ({ blog }) => {
 
@@ -86,21 +86,21 @@ const Blog = ({ blog }) => {
                 <h3>COMMENTS</h3>
                 <div>
                     <form className = {classes.formRoot} noValidate onSubmit={addComment}>
-                    <div>
-                        <TextField id = 'outlined-basic' value = {comment} label = 'Comment' onChange = {({ target }) => (setComment(target.value))} placeholder = 'add comment...' required />
-                    </div>
-                    <Button type = 'submit' variant = 'contained' color = 'primary'>Add comment</Button>
+                        <div>
+                            <TextField id = 'outlined-basic' value = {comment} label = 'Comment' onChange = {({ target }) => (setComment(target.value))} placeholder = 'add comment...' required />
+                        </div>
+                        <Button type = 'submit' variant = 'contained' color = 'primary'>Add comment</Button>
                     </form>
                 </div>
                 <div>
-                <List component="nav" className={classes.root} aria-label={`comments ${blog.title}`}>
-                    {blog.comments.map(comment => {
-                        return <ListItem button key = {Math.random()*100000}>
-                            <ListItemText primary = {comment} />
-                        </ListItem>
-                    })
-                    }
-                </List>
+                    <List component="nav" className={classes.root} aria-label={`comments ${blog.title}`}>
+                        {blog.comments.map(comment => {
+                            return <ListItem button key = {Math.random()*100000}>
+                                <ListItemText primary = {comment} />
+                            </ListItem>
+                        })
+                        }
+                    </List>
 
                     {/* <ul>
                         {blog.comments.map(comment => {

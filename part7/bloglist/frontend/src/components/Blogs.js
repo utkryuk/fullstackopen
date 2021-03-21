@@ -29,14 +29,14 @@ const StyledTableCell = withStyles((theme) => ({
 }))(TableCell)
 
 const Blogs = () => {
-    
+
     const classes = useStyles()
 
     const blogs = useSelector(state => state.blogs)
         .sort((a, b) => {
             return b.likes - a.likes
         })
-    
+
     return (
         <div>
             <h2>Blogs</h2>

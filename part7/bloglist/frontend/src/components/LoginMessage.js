@@ -22,11 +22,11 @@ const LoginMessage = () => {
         <span>
             {
                 user !== null ?
-                <div>
-                    <Button color ='inherit' onClick = {handleLogOutButton}>Logout</Button>
-                    <em>{user.name} logged in</em>
-                </div>
-                : <Button color = 'inherit' component = {Link} to = '/'>Login</Button>
+                    <div>
+                        <Button color ='inherit' onClick = {handleLogOutButton}>Logout</Button>
+                        <em>{user.name} logged in</em>
+                    </div>
+                    : <Button color = 'inherit' component = {Link} to = '/'>Login</Button>
             }
         </span>
     )

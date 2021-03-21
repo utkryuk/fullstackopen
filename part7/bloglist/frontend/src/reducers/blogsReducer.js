@@ -14,13 +14,13 @@ export const initialBlogs = () => {
 export const addBlog = (title, author, url) => {
     return async dispatch => {
         try {
-            const newBlog = await blogService.createBlog({ title, author, url})
+            const newBlog = await blogService.createBlog({ title, author, url })
             dispatch({
                 type: 'ADD_BLOG',
                 data: newBlog
             })
-    
-            dispatch(setNotification(`${title} by ${author} added`, 5, true))    
+
+            dispatch(setNotification(`${title} by ${author} added`, 5, true))
         }
         catch (error) {
             alert(error)
@@ -50,7 +50,7 @@ export const likeBlog = (blog) => {
 export const deleteBlog = (blogId) => {
     return async dispatch => {
         await blogService.deleteBlog(blogId)
-        
+
         dispatch({
             type: 'DELETE_BLOG',
             data: blogId
@@ -78,29 +78,29 @@ export const addBlogComment = (id, comment) => {
 
 const blogsReducer = (state = [], action) => {
     switch(action.type) {
-        case 'INIT_BLOGS':
-            return action.data
+    case 'INIT_BLOGS':
+        return action.data
 
-        case 'ADD_BLOG':
-            return [...state, action.data]
+    case 'ADD_BLOG':
+        return [...state, action.data]
 
-        case 'LIKE_BLOG':
-            return state.map((blog) => {
-                return action.data.id !== blog.id ? blog : action.data
-            })
+    case 'LIKE_BLOG':
+        return state.map((blog) => {
+            return action.data.id !== blog.id ? blog : action.data
+        })
 
-        case 'DELETE_BLOG':
-            return state.filter((blog) => {
-                return action.data !== blog.id
-            })
+    case 'DELETE_BLOG':
+        return state.filter((blog) => {
+            return action.data !== blog.id
+        })
 
-        case 'ADD_COMMENT':
-            return state.map((blog) => {
-                return action.data.id !== blog.id ? blog : {...blog, comments: [...blog.comments, action.data.comment]}
-            })
+    case 'ADD_COMMENT':
+        return state.map((blog) => {
+            return action.data.id !== blog.id ? blog : { ...blog, comments: [...blog.comments, action.data.comment] }
+        })
 
-        default:
-            return state
+    default:
+        return state
 
     }
 }

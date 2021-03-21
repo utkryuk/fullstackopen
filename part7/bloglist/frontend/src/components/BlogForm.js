@@ -5,13 +5,13 @@ import { addBlog } from '../reducers/blogsReducer'
 import { Button, makeStyles, TextField } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '25ch',
+    root: {
+        '& > *': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        },
     },
-  },
-}));
+}))
 
 const BlogForm = () => {
 
@@ -30,7 +30,7 @@ const BlogForm = () => {
         blogFormRef.current.toggleVisibility()
 
         dispatch(addBlog(title, author, url))
-    
+
         setTitle('')
         setAuthor('')
         setUrl('')

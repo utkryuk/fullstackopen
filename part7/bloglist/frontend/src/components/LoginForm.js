@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { Button, makeStyles, TextField } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '25ch',
+    root: {
+        '& > *': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        },
     },
-  },
-}));
+}))
 
 const LoginForm = ({ handleLoginFormSubmit, username, setUserName, password, setPassword }) => {
 

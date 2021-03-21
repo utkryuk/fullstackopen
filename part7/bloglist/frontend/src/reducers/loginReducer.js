@@ -6,7 +6,7 @@ export const initialLogin = () => {
     return async dispatch => {
         const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
         if (loggedUserJSON) {
-            
+
             const userData = JSON.parse(loggedUserJSON)
             blogService.setToken(userData.token)
 
@@ -47,14 +47,14 @@ export const logout = () => {
 
 const loginReducer = (state = null, action) => {
     switch(action.type) {
-        case 'INIT_LOGIN':
-            return action.data
-        case 'LOGIN':
-            return action.data
-        case 'LOGOUT':
-            return null
-        default:
-            return state
+    case 'INIT_LOGIN':
+        return action.data
+    case 'LOGIN':
+        return action.data
+    case 'LOGOUT':
+        return null
+    default:
+        return state
     }
 }
 

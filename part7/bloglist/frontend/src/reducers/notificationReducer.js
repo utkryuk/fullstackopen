@@ -9,9 +9,9 @@ export const setNotification = (notification, time, isSuccess) => {
                 success: isSuccess
             }
         })
-        
+
         clearTimeout(setTimeoutId)
-        
+
         setTimeoutId = setTimeout(() => {
             dispatch({
                 type: 'REMOVE_NOTIFICATION'
@@ -22,12 +22,12 @@ export const setNotification = (notification, time, isSuccess) => {
 
 const notificationReducer = (state = null, action) => {
     switch(action.type) {
-        case 'SHOW_NOTIFICATION':
-            return action.data
-        case 'REMOVE_NOTIFICATION':
-            return null
-        default:
-            return state
+    case 'SHOW_NOTIFICATION':
+        return action.data
+    case 'REMOVE_NOTIFICATION':
+        return null
+    default:
+        return state
     }
 }
 

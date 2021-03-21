@@ -18,7 +18,7 @@ describe('Blog app', () => {
         cy.get('#login-button')
     })
 
-    describe('login', function (){
+    describe('login', function () {
         it('succeeds with correct credentials', function() {
             cy.get('#username').type('utkarsh')
             cy.get('#password').type('sekret')
@@ -45,23 +45,23 @@ describe('Blog app', () => {
     describe.only('When logged in', function() {
 
         beforeEach(function() {
-            cy.login({username: 'utkarsh', password: 'sekret'})
+            cy.login({ username: 'utkarsh', password: 'sekret' })
         })
 
         it('A blog can be created', function() {
-        
-        const newBlog = {
-            title: 'A new blog added',
-            author: 'Tester',
-            url: 'www.google.com'
-        }    
-        cy.contains('create new blog').click()
 
-        cy.get('.blog-title').type(newBlog.title)
-        cy.get('.blog-author').type(newBlog.author)
-        cy.get('.blog-url').type(newBlog.url)
+            const newBlog = {
+                title: 'A new blog added',
+                author: 'Tester',
+                url: 'www.google.com'
+            }
+            cy.contains('create new blog').click()
 
-        cy.get('.blog-submit').click()
+            cy.get('.blog-title').type(newBlog.title)
+            cy.get('.blog-author').type(newBlog.author)
+            cy.get('.blog-url').type(newBlog.url)
+
+            cy.get('.blog-submit').click()
 
             cy.get('.success-class')
                 .should('contain', newBlog.title)
@@ -81,8 +81,8 @@ describe('Blog app', () => {
 
         it('a blog can be liked', function() {
 
-            cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com', likes: 0})
-            
+            cy.addBlog({ title: 'Testing My blog', author: 'Tester', url: 'www.google.com', likes: 0 })
+
             cy.get('.view-btn').click()
             cy.get('.hide-btn').contains('hide')
 
@@ -95,7 +95,7 @@ describe('Blog app', () => {
 
         it('a blog can be deleted by authorized user', function() {
 
-            cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com', likes: 0})
+            cy.addBlog({ title: 'Testing My blog', author: 'Tester', url: 'www.google.com', likes: 0 })
             cy.get('.view-btn').click()
             cy.get('.hide-btn').contains('hide')
 
@@ -106,13 +106,13 @@ describe('Blog app', () => {
 
         it('a blog cannot be deleted by unauthorized user', function() {
 
-            cy.addBlog({title: 'Testing My blog', author: 'Tester', url: 'www.google.com', likes: 0})
+            cy.addBlog({ title: 'Testing My blog', author: 'Tester', url: 'www.google.com', likes: 0 })
 
             cy.get('.logout-btn').click()
 
-            cy.addUser({name: 'Yash', username: 'yash', password: 'newpassword'})
+            cy.addUser({ name: 'Yash', username: 'yash', password: 'newpassword' })
 
-            cy.login({username: 'yash', password: 'newpassword'})
+            cy.login({ username: 'yash', password: 'newpassword' })
 
             cy.get('.view-btn').click()
             cy.get('.hide-btn').contains('hide')
@@ -122,14 +122,14 @@ describe('Blog app', () => {
 
         it('all blogs are sorted in descending order on the basis of likes', function() {
 
-            cy.addBlog({title: 'Testing my blog1', author: 'tester1', url: 'www.google.com', likes: 50})
-            cy.addBlog({title: 'Testing my blog2', author: 'tester2', url: 'www.google.com', likes: 101})
-            cy.addBlog({title: 'Testing my blog3', author: 'tester3', url: 'www.google.com', likes: 60})
+            cy.addBlog({ title: 'Testing my blog1', author: 'tester1', url: 'www.google.com', likes: 50 })
+            cy.addBlog({ title: 'Testing my blog2', author: 'tester2', url: 'www.google.com', likes: 101 })
+            cy.addBlog({ title: 'Testing my blog3', author: 'tester3', url: 'www.google.com', likes: 60 })
 
             cy.get('.blogDiv')
                 .then(() => {
-                    cy.get('.view-btn').click({multiple: true})
-                    
+                    cy.get('.view-btn').click({ multiple: true })
+
                     cy.get('.likes-number').then((likes) => {
 
                         const likeArray = []

@@ -30,7 +30,7 @@ const StyledTableCell = withStyles((theme) => ({
 
 
 const Users = () => {
-    
+
     const dispatch = useDispatch()
     const classes = useStyles()
 
@@ -39,7 +39,7 @@ const Users = () => {
     }, [dispatch])
 
     const users = useSelector(state => state.users)
-    
+
     return (
         <div>
             <h2>

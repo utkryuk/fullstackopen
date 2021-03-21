@@ -1,16 +1,16 @@
 import React from 'react'
-import { makeStyles, List, ListItem, ListItemText } from '@material-ui/core';
+import { makeStyles, List, ListItem, ListItemText } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-    
+    root: {
+        width: '100%',
+        maxWidth: 360,
+        backgroundColor: theme.palette.background.paper,
+    },
+}))
+
 const User = ({ user }) => {
-    
+
     const classes = useStyles()
 
     if (!user) {
@@ -19,7 +19,7 @@ const User = ({ user }) => {
 
     return (
         <div>
-            <h1>{user.name}</h1>                
+            <h1>{user.name}</h1>
             <h3>Added Blogs</h3>
 
             <List component="nav" className={classes.root} aria-label={`blogs of ${user.name}`}>

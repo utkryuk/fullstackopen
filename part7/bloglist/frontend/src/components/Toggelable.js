@@ -29,7 +29,7 @@ const Toggelable = React.forwardRef((props, ref) => {
             </div>
             <div style = {showWhenVisible}>
                 {props.children}
-            <Button variant= 'contained' color= 'secondary' onClick = {toggleVisibility}>CANCEL</Button>
+                <Button variant= 'contained' color= 'secondary' onClick = {toggleVisibility}>CANCEL</Button>
             </div>
         </div>
     )
